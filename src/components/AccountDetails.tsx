@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { fetchSettingsStart, updateSettingsStart } from '@/redux/slices/settingsSlice';
 import { Settings } from '@/models/Settings';
-import { User } from '@/models/User'
+import { User } from '@/models/User';
 import { fetchSessionStart, fetchUserDetailsStart } from '@/redux/slices/authSlice';
+import { format } from 'date-fns';
 
 const AccountDetails = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const AccountDetails = () => {
   const loading = useSelector((state: RootState) => state.settings.loading);
   const secLoading = useSelector((state: RootState) => state.settings.secLoading);
   const session = useSelector((state: RootState) => state.auth.session);
-  const user = useSelector((state: RootState) => state.auth.user)
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const [userDetails, setUserDetails] = useState<Partial<User>>({});
   const [isEditing, setIsEditing] = useState(false);
@@ -26,84 +27,67 @@ const AccountDetails = () => {
   const toast = useToast();
 
   useEffect(() => {
-    // Fetch settings when the component mounts
-    // console.log('session account details',session)
-    if(!session){
-      dispatch(fetchSessionStart())
+    // Fetch session and settings when the component mounts
+    if (!session) {
+      dispatch(fetchSessionStart());
     }
     if (!settings) {
       dispatch(fetchSettingsStart());
-      // console.log("settings in acc details",settings)
     }
-    if(!loading && session)
-        if(session?.user && session.user?.id){
-           const userId = session.user.id
-           console.log(userId)
-            dispatch(fetchUserDetailsStart(userId));
-            setUserDetails(user);
-            console.log("user details", userDetails);
-          }      
-   
+    if (!loading && session) {
+      if (session?.user && session.user?.id) {
+        const userId = session.user.id;
+        dispatch(fetchUserDetailsStart(userId));
+        if (user) setUserDetails(user);
+      }
+    }
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (settings) {
-  //     setUserDetails(user);
-  //     setOriginalDetails(settings);
-  //   }
-  // }, [settings]);
-
+  // Handle profile update
   const handleUpdate = async () => {
-    dispatch(updateSettingsStart(settings));
-    setIsEditing(false);
-    setHasChanges(false);
-    toast({
-      title: "Profile updated.",
-      description: "Your profile has been successfully updated.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    if (settings) { // make sure settings is not null
+      dispatch(updateSettingsStart(settings));
+      setIsEditing(false);
+      setHasChanges(false);
+      toast({
+        title: "Profile updated.",
+        description: "Your profile has been successfully updated.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
+  // Handle input change and mark as changed
   const handleInputChange = (field: keyof User, value: any) => {
     setUserDetails({ ...userDetails, [field]: value });
     setHasChanges(true);
   };
 
+  // Cancel editing and revert changes
   const handleCancel = () => {
     setUserDetails(originalDetails);
     setIsEditing(false);
     setHasChanges(false);
   };
 
+  // Handle password update
   const handlePasswordUpdate = () => {
-    // Handle password update logic here
     onOpen();
   };
-  const getCreatedDate = (session) =>{
-    try {
-      return session.user.created_at;
-    } catch (error) {
-      console.log("no session")
-      return null;
-    }
-  }
+
+// Function to format the account creation date
+const getFormattedDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return `Been a member since ${format(date, 'MMMM d, yyyy')}`;
+};
 
   if (loading && session && userDetails) return <Text>Loading...</Text>;
-else
+
   return (
     <VStack spacing={6} alignItems="flex-start">
-      <HStack width="full" justifyContent="space-between">
-        <VStack spacing={4} alignItems="flex-start">
-          {/* <Avatar size="xl" src={userDetails.profilePic} /> */}
-          {session && (<Text>Date Joined: {new Date(session.created_at!).toLocaleDateString()}</Text>
-          )}
-        </VStack>
-        <Box>
 
-        </Box>
-      </HStack>
       <VStack spacing={4} alignItems="flex-start" width="full">
         <HStack width="full" justifyContent="space-between">
           <Box width="full">
@@ -154,7 +138,14 @@ else
           </HStack>
         )}
       </VStack>
-
+      <HStack width="full" justifyContent="space-between">
+        <VStack spacing={4} alignItems="flex-start">
+          {session?.user && (
+            <Text className='text-sm text-gray-500'>{getFormattedDate(session.user.created_at)}</Text>
+          )}
+        </VStack>
+        <Box />
+      </HStack>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
