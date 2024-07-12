@@ -1,0 +1,41 @@
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  color: #999;
+}
+
+.input {
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: wavy;
+  width: 100%;
+  padding: 8px 16px 8px 32px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

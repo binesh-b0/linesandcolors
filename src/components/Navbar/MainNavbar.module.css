@@ -1,0 +1,82 @@
+.navbar {
+  width: 100%;
+}
+
+.navbarItem {
+  position: relative;
+  padding: 3px;
+}
+
+
+.navbarItem button .underlineAnimation {
+  position: absolute;
+  height: 2px;
+  color: var(--color-dark-teal);
+  background-color: var(--color-dark-teal);
+  bottom: 0;
+  left: 0;
+}
+
+.dropdown {
+  width: 100vw;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: 16px;
+  height: 350px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdownContent {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+}
+
+.dropdownLeft {
+  width: 25%;
+  padding: 16px;
+}
+
+.dropdownRight {
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.dropdownLink {
+  padding: 8px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.dropdownLink:hover {
+  background-color: #f1f1f1;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.showOverlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.navbar {
+  z-index: 10;
+}
+
+.dropdown {
+  z-index: 20;
+}

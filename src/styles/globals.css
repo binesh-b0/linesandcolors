@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-white: #FFFFFF;
+  --color-teal: #008080;
+  --color-dark-teal: #005F5F;
+  --color-light-gray: #F5F5F5;
+  --color-coral: #FF6F61;
+  --color-gold: #FFD700;
+}
+
+
+body {
+  font-family: "poppins", sans-serif;
+  /* color: var(--color-dark-teal); */
+}
+
+/* nav.relative {
+    width: 100%;
+  }
+  
+  .absolute {
+    width: 100vw;
+    left: 0;
+  }
+  
+  .group:hover .group-hover\\:flex {
+    display: flex;
+  }
+  
+  button .absolute {
+    height: 2px;
+    background-color: black;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .transition {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .transform {
+    transform: scale(0.95);
+  } */
+  

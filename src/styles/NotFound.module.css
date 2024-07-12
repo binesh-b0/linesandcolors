@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white; /* Adjust to match your project's background */
+}
+
+.icon {
+  margin-bottom: 16px;
+}
+
+.svgIcon {
+  width: 100px;
+  height: 100px;
+  color: #008080; /* Adjust to match your project's primary color */
+}
+
+.notFoundText {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333; /* Adjust to match your project's text color */
+}
+
+.notFoundDescription {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #666; /* Adjust to match your project's text color */
+}
+

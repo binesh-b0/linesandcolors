@@ -1,0 +1,12 @@
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .navItem:hover {
+    transform: scale(1.1);
+  }
+  
