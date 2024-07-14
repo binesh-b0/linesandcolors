@@ -7,7 +7,9 @@ import BillingPayments from '@/components/BillingPayments';
 import Preferences from '@/components/Preferences';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutStart } from '@/redux/slices/authSlice';
-import { fetchSessionStart } from '@/redux/slices/authSlice';
+import { fetchSessionStart, fetchUserDetailsStart } from '@/redux/slices/authSlice';
+import { fetchBillingDetailsStart, fetchSettingsStart, updateSettingsStart } from '@/redux/slices/settingsSlice';
+
 import './AccountTabs.css'; // Add necessary CSS
 import { RootState } from '@/redux/store';
 
@@ -21,19 +23,42 @@ const tabs = [
   { icon: FaUser, label: 'Account', component: AccountDetails },
   { icon: FaBell, label: 'Notification', component: NotificationSettings },
   { icon: FaCreditCard, label: 'Billing & Payments', component: BillingPayments },
-  { icon: FaCogs, label: 'Preferences', component: Preferences },
+  // { icon: FaCogs, label: 'Preferences', component: Preferences }, // add later
 ];
 
 const AccountTabs = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const dispatch = useDispatch();
+  const settings = useSelector((state: RootState) => state.settings.settings);
+  const billings = useSelector((state: RootState) => state.settings.billingDetails);
+  const loading = useSelector((state: RootState) => state.auth.loading);
+  const secLoading = useSelector((state: RootState) => state.settings.secLoading);
+  const session = useSelector((state: RootState) => state.auth.session);
+  const user = useSelector((state: RootState) => state.auth.user);
 
+  useEffect(() => {
+    // Fetch session and settings when the component mounts
+    if (!session) {
+      dispatch(fetchSessionStart());
+    }
+    if (!loading && session) {
+      if (session?.user && session.user?.id) {
+        const userId = session.user.id;
+        if(userId) dispatch(fetchSettingsStart(userId));
+        if (userId) dispatch(fetchUserDetailsStart(userId));
+        if (userId) dispatch(fetchBillingDetailsStart(userId));
+      }
+    }
+  }, [dispatch]);
+  
   const handleSignOut = () => {
     dispatch(signOutStart());
   };
-
   
   const ActiveComponent = tabs[tabIndex].component;
+
+  if (loading && session && user && secLoading) return <p>Loading...</p>;
+
 
   return (
     <div className="account-tabs-container">
@@ -78,7 +103,14 @@ const AccountTabs = () => {
                 overflow: 'hidden',
               }}
             >
-              <ActiveComponent/>
+              <ActiveComponent
+              session = {session}
+              user={user}
+              settings={settings}
+              loading={loading}
+              secLoading={secLoading}
+              billings={billings}
+              />
             </motion.div>
           </AnimatePresence>
         </div>

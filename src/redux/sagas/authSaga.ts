@@ -41,7 +41,6 @@ function* handleSignUp(action: PayloadAction<{ email: string; password: string; 
 }
 
 function* handleSignOut() {
-  console.log("signout saga")
   try {
     yield call(signOut);
     yield put(signOutSuccess());
@@ -61,9 +60,7 @@ function* handleFetchSession() {
 
 function* handleFetchUserDetails(action: PayloadAction<{userId: any|string}>){
   try{
-    console.log(action.payload)
     const userId = action.payload;
-    console.log("user id 0-0-0-0-0",userId)
     const user:User = yield call(getUserDetails,userId);
     yield put(fetchUserDetailsSuccess(user));
   }catch(error:any){

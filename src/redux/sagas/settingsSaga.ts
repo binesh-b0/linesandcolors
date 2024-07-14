@@ -16,9 +16,11 @@ import {
 import { getUserSettings, updateUserSettings, getBillingDetails, updateBillingDetails } from '@/models/Settings';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-function* handleFetchSettings(action: PayloadAction<string>) {
+
+function* handleFetchSettings(action: PayloadAction<{userId: string}>) {
   try {
-    const settings = yield call(getUserSettings, action.payload);
+    const userId = action.payload;
+    const settings = yield call(getUserSettings, userId);
     yield put(fetchSettingsSuccess(settings));
   } catch (error: any) {
     yield put(fetchSettingsFailure(error.message));
@@ -27,8 +29,9 @@ function* handleFetchSettings(action: PayloadAction<string>) {
 
 function* handleUpdateSettings(action: PayloadAction<Partial<Settings>>) {
   try {
-    const settings = yield call(updateUserSettings, action.payload);
-    yield put(updateSettingsSuccess(settings));
+    const { old_settings } = action.payload;
+    const new_settings = yield call(updateUserSettings, old_settings);
+    yield put(updateSettingsSuccess(new_settings));
   } catch (error: any) {
     yield put(updateSettingsFailure(error.message));
   }

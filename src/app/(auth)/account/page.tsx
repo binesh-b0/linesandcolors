@@ -15,7 +15,6 @@ const AccountPage = () => {
 
   // Effect to fetch the session when the component mounts
   useEffect(() => {
-    console.log("session account cccccc",session)
     if(!session){
       dispatch(fetchSessionStart());
     }

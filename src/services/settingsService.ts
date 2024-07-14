@@ -1,4 +1,7 @@
-import { getUserSettings, updateUserSettings, getBillingDetails, updateBillingDetails } from '@/models/Settings';
+import { Address,AddressModel } from '@/models/Address';
+import { getUserSettings, updateUserSettings, getBillingDetails, updateBillingDetails, Settings, BillingDetails } from '@/models/Settings';
+
+
 
 /**
  * Fetch user settings by user ID
@@ -35,4 +38,29 @@ export const fetchBillingDetails = async (userId: string) => {
  */
 export const saveBillingDetails = async (details: Partial<BillingDetails>) => {
   return await updateBillingDetails(details);
+};
+/**
+ * Adds address into address table
+ * @param address 
+ * @returns new address
+ */
+export const addAddress = async (address: Partial<Address>) => {
+  return await AddressModel.createAddress(address);
+};
+/**
+ * Updates address in address table
+ * @param id 
+ * @param updates 
+ * @returns updated address
+ */
+export const updateAddress = async (id: string, updates: Partial<Address>) => {
+  return await AddressModel.updateAddress(id, updates);
+};
+/**
+ * 
+ * @param id 
+ * @returns 
+ */
+export const deleteAddress = async (id: string) => {
+  return await AddressModel.deleteAddress(id);
 };

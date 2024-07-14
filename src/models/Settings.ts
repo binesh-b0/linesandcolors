@@ -1,4 +1,5 @@
 import { supabase } from '@/config/supabaseClient';
+import { Address } from './Address';
 
 // Define the Settings interface
 export interface Settings {
@@ -15,11 +16,12 @@ export interface Settings {
 export interface BillingDetails {
   id: string;
   user_id: string;
-  billin_address_id: string;
+  billing_address_id: string;
   payment_method: string;
   created_at: Date;
   updated_at: Date;
 }
+
 
 // Fetch user settings by user ID
 export const getUserSettings = async (userId: string): Promise<Settings | null> => {
@@ -32,7 +34,7 @@ export const getUserSettings = async (userId: string): Promise<Settings | null> 
     const { data, error } = await supabase
       .from<Settings>('settings')
       .select('*')
-      .eq('user_id', userId)  // Use the provided userId variable
+      .eq('user_id', userId)
       .single();
 
     if (error) {
@@ -63,18 +65,39 @@ export const updateUserSettings = async (settings: Partial<Settings>): Promise<S
 };
 
 // Fetch billing details by user ID
-export const getBillingDetails = async (userId: string): Promise<BillingDetails | null> => {
-  const { data, error } = await supabase
-    .from<BillingDetails>('billing_details')
-    .select('*')
-    .eq('user_id', userId)
-    .single();
+export const getBillingDetails = async (userId: string): Promise<{ billingDetails: BillingDetails, address: Address } | null> => {
+  try {
+    const { data: billingDetails, error: billingError } = await supabase
+      .from<BillingDetails>('billing_details')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
 
-  if (error) {
-    console.error('Error fetching billing details:', error);
+    if (billingError) {
+      console.error('Error fetching billing details:', billingError);
+      return null;
+    }
+    if(billingDetails?.billing_address_id)
+    {const { data: billingAddress, error: addressError } = await supabase
+      .from<Address>('addresses')
+      .select('*')
+      .eq('id', billingDetails.billing_address_id)
+      .single();
+
+    if (addressError) {
+      console.error('Error fetching billing address:', addressError);
+      return null;
+    }}
+    else
+    {
+      return {billingDetails, address:null}
+    }
+
+    return { billingDetails, address };
+  } catch (e) {
+    console.error('Exception fetching billing details:', e);
     return null;
   }
-  return data;
 };
 
 // Update billing details

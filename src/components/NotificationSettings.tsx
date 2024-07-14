@@ -1,32 +1,60 @@
 "use client";
-import { VStack, Checkbox, Button } from '@chakra-ui/react';
+import { VStack, Switch, Button, FormControl, FormLabel } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { getNotificationSettings, updateNotificationSettings } from '@/services/settingsService'; // Implement these functions
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSettingsStart, updateSettingsStart } from '@/redux/slices/settingsSlice';
+import { RootState } from '@/redux/store';
+import { Session } from '@/models/Session';
+import { User } from '@/models/User';
+import { Settings } from '@/models/Settings';
 
-const NotificationSettings = () => {
-  const [settings, setSettings] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+interface NotificationSettingsProps {
+  session:Session;
+  user:User;
+  settings:Partial<Settings>;
+  loading:boolean;
+  secLoading:boolean;
+}
+
+const NotificationSettings:React.FC<NotificationSettingsProps> = ({  session, user,settings, loading,secLoading }) => {
+  const dispatch = useDispatch();
+  const [emailNotifications, setEmailNotifications] = useState(false);
+  const [smsNotifications, setSmsNotifications] = useState(false);
 
   useEffect(() => {
-    const fetchSettings = async () => {
-      const settings = await getNotificationSettings();
-      setSettings(settings);
-      setIsLoading(false);
-    };
-    fetchSettings();
-  }, []);
+    if (!settings) {
+      dispatch(fetchSettingsStart());
+    } else {
+      setEmailNotifications(settings.email_updates?settings.email_updates:false);
+      setSmsNotifications(settings.sms_notifications?settings.sms_notifications:false);
+    }
+  }, [dispatch, settings]);
 
   const handleUpdate = async () => {
-    // Update notification settings logic
+    dispatch(updateSettingsStart({
+      ...settings,
+      emailUpdates: emailNotifications,
+      sms_notificatinos:smsNotifications,
+      updated_at:new Date(Date.now()),
+    }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <VStack spacing={4}>
-      kjjnkjnkm
-      <Checkbox isChecked={settings.emailNotifications}>Email Notifications</Checkbox>
-      <Checkbox isChecked={settings.smsNotifications}>SMS Notifications</Checkbox>
+      <FormControl display="flex" alignItems="center">
+        <FormLabel htmlFor="email-notifications" mb="0">
+          Email Notifications
+        </FormLabel>
+        <Switch id="email-notifications" isChecked={emailNotifications} onChange={(e) => setEmailNotifications(e.target.checked)} />
+      </FormControl>
+      <FormControl display="flex" alignItems="center">
+        <FormLabel htmlFor="sms-notifications" mb="0">
+          SMS Notifications
+        </FormLabel>
+        <Switch id="sms-notifications" isChecked={smsNotifications} onChange={(e) => setSmsNotifications(e.target.checked)} />
+      </FormControl>
       <Button colorScheme="teal" onClick={handleUpdate}>Update Settings</Button>
     </VStack>
   );

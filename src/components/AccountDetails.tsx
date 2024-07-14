@@ -8,16 +8,25 @@ import { RootState } from '@/redux/store';
 import { fetchSettingsStart, updateSettingsStart } from '@/redux/slices/settingsSlice';
 import { Settings } from '@/models/Settings';
 import { User } from '@/models/User';
+import { Session } from '@/models/Session';
 import { fetchSessionStart, fetchUserDetailsStart } from '@/redux/slices/authSlice';
 import { format } from 'date-fns';
 
-const AccountDetails = () => {
+interface AccountDetailsProps {
+  session: Session;
+  user: Partial<User>;
+  settings: Partial<Settings>;
+  loading: boolean;
+  secLoading: boolean;
+}
+
+const AccountDetails: React.FC<AccountDetailsProps> = ({ session, user, settings, loading, secLoading }) => {
   const dispatch = useDispatch();
-  const settings = useSelector((state: RootState) => state.settings.settings);
-  const loading = useSelector((state: RootState) => state.settings.loading);
-  const secLoading = useSelector((state: RootState) => state.settings.secLoading);
-  const session = useSelector((state: RootState) => state.auth.session);
-  const user = useSelector((state: RootState) => state.auth.user);
+  // const settings = useSelector((state: RootState) => state.settings.settings);
+  // const loading = useSelector((state: RootState) => state.auth.loading);
+  // const secLoading = useSelector((state: RootState) => state.settings.secLoading);
+  // const session = useSelector((state: RootState) => state.auth.session);
+  // const user = useSelector((state: RootState) => state.auth.user);
 
   const [userDetails, setUserDetails] = useState<Partial<User>>({});
   const [isEditing, setIsEditing] = useState(false);
@@ -27,21 +36,28 @@ const AccountDetails = () => {
   const toast = useToast();
 
   useEffect(() => {
-    // Fetch session and settings when the component mounts
-    if (!session) {
-      dispatch(fetchSessionStart());
+    if (user) {
+      setUserDetails(user);
+      setOriginalDetails(user);
     }
-    if (!settings) {
-      dispatch(fetchSettingsStart());
-    }
-    if (!loading && session) {
-      if (session?.user && session.user?.id) {
-        const userId = session.user.id;
-        dispatch(fetchUserDetailsStart(userId));
-        if (user) setUserDetails(user);
-      }
-    }
-  }, [dispatch]);
+  }, [user]);
+
+  // useEffect(() => {
+  //   // Fetch session and settings if it doesnt exist
+  //   if (!session) {
+  //     dispatch(fetchSessionStart());
+  //   }
+  //   if (!settings) {
+  //     dispatch(fetchSettingsStart());
+  //   }
+  //   if (!loading && session) {
+  //     if (session?.user && session.user?.id) {
+  //       const userId = session.user.id;
+  //       dispatch(fetchUserDetailsStart(userId));
+  //       if (user) setUserDetails(user);
+  //     }
+  //   }
+  // }, [dispatch]);
 
   // Handle profile update
   const handleUpdate = async () => {

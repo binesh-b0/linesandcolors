@@ -122,7 +122,6 @@ export const deleteUserAccount = async (userId: string) => {
  * @returns User
  */
 export const getUserDetails = async (userId:string) => {
-  console.log("user id ------------",userId)
   const user: User | null = await UserModel.getUserById(userId);
   console.log("returned user",user)
   return user;

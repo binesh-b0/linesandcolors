@@ -1,19 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Settings, BillingDetails } from '@/models/Settings';
 import {User} from '@/models/User'
+import { Address } from '@/models/Address';
 
 interface SettingsState {
   settings: Settings | null;
   billingDetails: BillingDetails | null;
   secLoading: boolean; // Not fullscreen loadings 
+  billingAddress:Partial<Address> | null;
   error: string | null;
+  user: User | null;
 }
 
 const initialState: SettingsState = {
   settings: null,
   billingDetails: null,
   secLoading: false,
+  billingAddress:null,
   error: null,
+  user:null
 };
 
 const settingsSlice = createSlice({
