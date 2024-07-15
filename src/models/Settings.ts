@@ -22,7 +22,6 @@ export interface BillingDetails {
   updated_at: Date;
 }
 
-
 // Fetch user settings by user ID
 export const getUserSettings = async (userId: string): Promise<Settings | null> => {
   try {
@@ -32,8 +31,8 @@ export const getUserSettings = async (userId: string): Promise<Settings | null> 
     }
 
     const { data, error } = await supabase
-      .from<Settings>('settings')
-      .select('*')
+      .from('settings')
+      .select<any,Settings>('*')
       .eq('user_id', userId)
       .single();
 
@@ -52,8 +51,8 @@ export const getUserSettings = async (userId: string): Promise<Settings | null> 
 // Update user settings
 export const updateUserSettings = async (settings: Partial<Settings>): Promise<Settings | null> => {
   const { data, error } = await supabase
-    .from<Settings>('settings')
-    .update(settings)
+    .from('settings')
+    .update<Partial<Settings>>(settings)
     .eq('id', settings.id)
     .single();
 
@@ -65,11 +64,11 @@ export const updateUserSettings = async (settings: Partial<Settings>): Promise<S
 };
 
 // Fetch billing details by user ID
-export const getBillingDetails = async (userId: string): Promise<{ billingDetails: BillingDetails, address: Address } | null> => {
+export const getBillingDetails = async (userId: string): Promise<{ billingDetails: BillingDetails, address: Address | null } | null> => {
   try {
     const { data: billingDetails, error: billingError } = await supabase
-      .from<BillingDetails>('billing_details')
-      .select('*')
+      .from('billing_details')
+      .select<any,BillingDetails>('*')
       .eq('user_id', userId)
       .single();
 
@@ -77,23 +76,29 @@ export const getBillingDetails = async (userId: string): Promise<{ billingDetail
       console.error('Error fetching billing details:', billingError);
       return null;
     }
-    if(billingDetails?.billing_address_id)
-    {const { data: billingAddress, error: addressError } = await supabase
-      .from<Address>('addresses')
-      .select('*')
-      .eq('id', billingDetails.billing_address_id)
-      .single();
 
-    if (addressError) {
-      console.error('Error fetching billing address:', addressError);
+    if (!billingDetails) {
       return null;
-    }}
-    else
-    {
-      return {billingDetails, address:null}
     }
 
-    return { billingDetails, address };
+    let billingAddress: Address | null = null;
+
+    if (billingDetails.billing_address_id) {
+      const { data: addressData, error: addressError } = await supabase
+        .from('addresses')
+        .select<any,Address>('*')
+        .eq('id', billingDetails.billing_address_id)
+        .single();
+
+      if (addressError) {
+        console.error('Error fetching billing address:', addressError);
+        return { billingDetails, address: null };
+      }
+
+      billingAddress = addressData;
+    }
+
+    return { billingDetails, address: billingAddress };
   } catch (e) {
     console.error('Exception fetching billing details:', e);
     return null;
@@ -103,8 +108,8 @@ export const getBillingDetails = async (userId: string): Promise<{ billingDetail
 // Update billing details
 export const updateBillingDetails = async (details: Partial<BillingDetails>): Promise<BillingDetails | null> => {
   const { data, error } = await supabase
-    .from<BillingDetails>('billing_details')
-    .update(details)
+    .from('billing_details')
+    .update<Partial<BillingDetails>>(details)
     .eq('id', details.id)
     .single();
 

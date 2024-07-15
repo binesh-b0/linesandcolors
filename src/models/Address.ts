@@ -1,4 +1,3 @@
-// src/models/Address.ts
 import { supabase } from '@/config/supabaseClient';
 
 export interface Address {
@@ -24,7 +23,7 @@ export class AddressModel {
    */
   static async getAddressesByUserId(userId: string): Promise<Address[]> {
     const { data, error } = await supabase
-      .from<Address>('addresses')
+      .from<any, Address>('addresses')
       .select('*')
       .eq('user_id', userId)
       .is('deleted_at', null);
@@ -34,7 +33,7 @@ export class AddressModel {
       throw error;
     }
 
-    return data;
+    return data as Address[];
   }
 
   /**
@@ -44,7 +43,7 @@ export class AddressModel {
    */
   static async getAddressById(id: string): Promise<Address | null> {
     const { data, error } = await supabase
-      .from<Address>('addresses')
+      .from<any, Address>('addresses')
       .select('*')
       .eq('id', id)
       .single();
@@ -54,7 +53,7 @@ export class AddressModel {
       return null;
     }
 
-    return data;
+    return data as Address | null;
   }
 
   /**
@@ -64,8 +63,8 @@ export class AddressModel {
    */
   static async createAddress(address: Partial<Address>): Promise<Address | null> {
     const { data, error } = await supabase
-      .from<Address>('addresses')
-      .insert(address)
+      .from<string, Address>('addresses')
+      .insert(address as Address | any)
       .single();
 
     if (error) {
@@ -73,7 +72,7 @@ export class AddressModel {
       return null;
     }
 
-    return data;
+    return data as Address | null;
   }
 
   /**
@@ -84,8 +83,8 @@ export class AddressModel {
    */
   static async updateAddress(id: string, updates: Partial<Address>): Promise<Address | null> {
     const { data, error } = await supabase
-      .from<Address>('addresses')
-      .update(updates)
+      .from('addresses')
+      .update(updates as Address)
       .eq('id', id)
       .single();
 
@@ -94,7 +93,7 @@ export class AddressModel {
       return null;
     }
 
-    return data;
+    return data as Address | null;
   }
 
   /**
@@ -104,13 +103,14 @@ export class AddressModel {
    */
   static async deleteAddress(id: string): Promise<void> {
     const { error } = await supabase
-      .from<Address>('addresses')
-      .update({ deleted_at: new Date() })
+      .from<any, Address>('addresses')
+      .delete()
       .eq('id', id);
 
     if (error) {
       console.error('Error deleting address:', error);
       throw error;
     }
+    return;
   }
 }
