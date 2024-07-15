@@ -10,11 +10,16 @@
 
 .navbarItem button .underlineAnimation {
   position: absolute;
-  height: 2px;
+  height: 3px;
   color: var(--color-dark-teal);
   background-color: var(--color-dark-teal);
   bottom: 0;
   left: 0;
+}
+
+.navbarItem button:hover .underlineAnimation {
+  width: 100%;
+  transition: 10ms width ease-in-out;
 }
 
 .dropdown {
@@ -62,10 +67,12 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+  z-index: 49;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
 }
 
 .showOverlay {
@@ -74,9 +81,9 @@
 }
 
 .navbar {
-  z-index: 10;
+  z-index: 50;
 }
 
 .dropdown {
-  z-index: 20;
+  z-index: 50;
 }

@@ -38,7 +38,8 @@ const MainNavbar: React.FC = () => {
   return (
     <>
       <div id="overlay" className={styles.overlay}></div>
-      <div className={`bg-white shadow-md relative ${styles.navbar} z-10`}>
+      {/* <BlurredOverlay /> */}
+      <div className={`bg-white shadow-md relative ${styles.navbar} z-50`}>
         <div className="hidden md:flex box-border justify-around px-4 items-center space-x-4">
           {categories.map((category, index) => (
             <div
@@ -53,7 +54,7 @@ const MainNavbar: React.FC = () => {
                   className={`absolute bottom-0 left-0 h-1 bg-black ${styles.underlineAnimation}`}
                   initial={{ width: 0 }}
                   animate={{ width: activeCategory === index ? '100%' : '0' }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2, easings: 'easeInOut' }}
                 />
               </button>
             </div>
@@ -62,11 +63,11 @@ const MainNavbar: React.FC = () => {
         <AnimatePresence>
           {activeCategory !== null && isDropdownVisible && (
             <motion.div
-              className={`absolute left-0 top-full bg-white shadow-lg w-full p-4 z-20 ${styles.dropdown}`}
+              className={`absolute left-0 top-full bg-white shadow-lg w-full p-4 z-50 ${styles.dropdown}`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
               onMouseEnter={() => {
                 if (dropdownTimeout.current) {
                   clearTimeout(dropdownTimeout.current);

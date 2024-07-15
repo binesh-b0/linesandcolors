@@ -1,8 +1,9 @@
 "use client";
 import React from 'react';
 import Advertisement from '../components/Advertisement';
-import TrustedCustomers from '@/components/TrustedCustomers';
-import MailingList from '@/components/MailingList';
+import TrustedCustomers from '@/components/home/TrustedCustomers';
+import MailingList from '@/components/home/MailingList';
+import Hero from '@/components/home/Hero';
 import Footer from '@/components/Footer/Footer';
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
 
       {/* <Advertisement /> */}
       {/* Main Section: Add your main content here */}
+      <Hero />
       <TrustedCustomers />
       <MailingList />
     </div>
