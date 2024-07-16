@@ -1,21 +1,29 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { Box, Heading, Text, VStack } from '@chakra-ui/react';
-import { motion, useAnimation } from 'framer-motion';
+import { Box, Heading, Text, VStack, SimpleGrid } from '@chakra-ui/react';
+import { color, motion, useAnimation } from 'framer-motion';
 import { SparklesCore } from "@/components/ui/Sparkles";
 import { useTheme } from '@/context/ThemeContext';
 import { FlipWords } from '../ui/FlipWords';
+import HeroGridItems from './HeroGridItems';
 
 const Hero = () => {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   const controls = useAnimation();
   const colors = useTheme().colors;
-  const words = ['Creativity','Vison','Passion']
-
+  const words = ['Creativity', 'Vison', 'Passion']
+  const categories = [
+    { title: 'Deals', image: '/images/deals.png', description: 'Exclusive deals on our top products.', color: 'yellow.500' },
+    { title: 'Business Cards', image: '/images/business_cards_1.webp', description: 'High-quality business cards for professionals.', color: 'red.500' },
+    { title: 'Flyers', image: '/images/flyers.jpg', description: 'Eye-catching flyers to promote your events.' },
+    { title: 'Banners', image: '/images/banners.jpg', description: 'Large format banners for any occasion.' },
+    { title: 'Brochures', image: '/images/brochures.jpg', description: 'Informative brochures to showcase your services.' },
+    { title: 'Custom Prints', image: '/images/custom-prints.jpg', description: 'Personalized print products for any need.' },
+  ];
   useEffect(() => {
     const handleScroll = () => {
-      const yOffset = window.pageYOffset;
+      const yOffset = window.pageYOffset; // TODO:Remove the depricated function
       controls.start({ y: yOffset * 0.1 });
     };
 
@@ -28,7 +36,7 @@ const Hero = () => {
       position="relative"
       overflow="hidden"
       width="100%"
-      height="100vh"
+      minHeight="100vh"
       bgGradient="linear(to-r, teal.500, coral.500)"
     >
       <div className="w-full absolute inset-0 h-screen">
@@ -48,7 +56,7 @@ const Hero = () => {
         initial={{ opacity: 1, y: 50 }}
         animate={controls}
         opacity={1}
-        transition={{ duration: 2, ease: 'easeInOut' }}
+        transition={{ duration: '2', ease: 'easeInOut' }}
         exit={{ opacity: 1, y: 50 }}
         position="relative"
         maxWidth="80%"
@@ -88,14 +96,35 @@ const Hero = () => {
             fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
             color="white"
             textAlign="center"
-            transition={{ duration: 2, ease: 'easeInOut' }}
-            >
-            Bring Your {<FlipWords words={words}/>} to Life
+            transition={{ duration: '2', ease: 'easeInOut' }}
+          >
+            Bring Your {<FlipWords words={words} />} to Life
           </Heading>
         </VStack>
+      </Box>
+      {/* Category Cards */}
+      <Box
+        position="relative"
+        maxWidth="80%"
+        mx="auto"
+        mt="20"
+        mb="20"
+        p={8}
+      >
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6} mt={10} mx="auto" maxWidth="80%">
+          {categories.map((category) => (
+            <HeroGridItems
+              title={category.title}
+              image={category.image}
+              color={category.color}
+              // description={category.description}
+            />
+          ))}
+        </SimpleGrid>
       </Box>
     </Box>
   );
 };
 
 export default Hero;
+

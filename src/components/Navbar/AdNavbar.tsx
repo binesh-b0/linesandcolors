@@ -11,7 +11,7 @@ const AdNavbar: React.FC = () => {
   ];
 
   return (
-    <div className="bg-yellow-100 p-2 text-center text-sm">
+    <div className="bg-teal-800 text-white p-2 text-center text-sm">
       <Marquee gradient={false}>
         {advertisements.map((ad, index) => (
           <span key={index} className="mx-4">{ad}</span>
