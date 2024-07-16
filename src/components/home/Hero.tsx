@@ -2,14 +2,16 @@
 import { useState, useEffect } from 'react';
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
-import {SparklesCore} from "@/components/ui/Sparkles";
+import { SparklesCore } from "@/components/ui/Sparkles";
 import { useTheme } from '@/context/ThemeContext';
+import { FlipWords } from '../ui/FlipWords';
 
 const Hero = () => {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   const controls = useAnimation();
   const colors = useTheme().colors;
+  const words = ['Creativity','Vison','Passion']
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +23,6 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [controls]);
 
-  // const handleMouseMove = (e: React.MouseEvent) => {
-  //   setMouseX(e.clientX / window.innerWidth);
-  //   setMouseY(e.clientY / window.innerHeight);
-  // };
-
   return (
     <Box
       position="relative"
@@ -33,7 +30,6 @@ const Hero = () => {
       width="100%"
       height="100vh"
       bgGradient="linear(to-r, teal.500, coral.500)"
-      // onMouseMove={handleMouseMove}
     >
       <div className="w-full absolute inset-0 h-screen">
         <SparklesCore
@@ -49,10 +45,11 @@ const Hero = () => {
       {/* Hero Card */}
       <Box
         as={motion.div}
-        initial={{ opacity: 50, y: 50 }}
+        initial={{ opacity: 1, y: 50 }}
         animate={controls}
+        opacity={1}
         transition={{ duration: 2, ease: 'easeInOut' }}
-        exit={{ opacity: 50, y: 50 }}
+        exit={{ opacity: 1, y: 50 }}
         position="relative"
         maxWidth="80%"
         mx="auto"
@@ -63,35 +60,39 @@ const Hero = () => {
         backgroundPosition="center"
         borderRadius="md"
         height={'400px'}
-        boxShadow={`0px 0px 20px ${mouseX * 10}px ${mouseY * 10}px rgba(0, 95, 95, 0.8)`}
+        boxShadow="0px 10px 30px rgba(0, 95, 95, 0.5)"  // Dark teal shadow
         overflow="hidden"
-        zIndex="10"
+        zIndex="12"
+        cursor="pointer"
         _before={{
           content: '""',
           position: 'absolute',
-          top: '-20px',
-          right: '-20px',
-          bottom: '-20px',
-          left: '-20px',
-          // background: 'linear-gradient(45deg, teal.500, coral.500)',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          background: 'rgba(0, 0, 0, 0.5)',  // Dark overlay
           zIndex: '-1',
         }}
       >
-        <VStack spacing={4}>
+        <VStack spacing={4} height="100%" justify="center">
+          <Text
+            as="p"
+            fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+            color="teal.100"
+            textAlign='center'
+          >
+            Transform your visions into tangible reality with our bespoke print services.
+          </Text>
           <Heading
             as="h1"
             fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
             color="white"
-          >
-            Bring Your Creativity to Life
+            textAlign="center"
+            transition={{ duration: 2, ease: 'easeInOut' }}
+            >
+            Bring Your {<FlipWords words={words}/>} to Life
           </Heading>
-          <Text
-            as="p"
-            fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
-            color="teal.200"
-          >
-            Discover the best print products for your business and personal use.
-          </Text>
         </VStack>
       </Box>
     </Box>

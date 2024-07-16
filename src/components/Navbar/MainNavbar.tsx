@@ -54,7 +54,7 @@ const MainNavbar: React.FC = () => {
                   className={`absolute bottom-0 left-0 h-1 bg-black ${styles.underlineAnimation}`}
                   initial={{ width: 0 }}
                   animate={{ width: activeCategory === index ? '100%' : '0' }}
-                  transition={{ duration: 0.2, easings: 'easeInOut' }}
+                  transition={{ duration: 0.2, easings: 'easeInOut', }}
                 />
               </button>
             </div>

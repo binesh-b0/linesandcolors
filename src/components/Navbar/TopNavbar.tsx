@@ -71,7 +71,7 @@ const TopNavbar: React.FC = () => {
   return (
     <>
       {/* Large Screen View */}
-      <div className="hidden md:flex justify-between items-center bg-white p-4 sticky top-0 z-50">
+      <div className="hidden md:flex justify-between items-center bg-white pr-4 pl-2 pt-2 sticky top-0 z-50">
         <Link href="/" legacyBehavior>
           <a className="text-2xl" style={{ fontFamily: 'poppins, sans-serif', marginLeft: '24px' }}>Lines and Colors</a>
         </Link>
