@@ -63,7 +63,6 @@ const Hero = () => {
         boxShadow="0px 10px 30px rgba(0, 95, 95, 0.5)"  // Dark teal shadow
         overflow="hidden"
         zIndex="12"
-        cursor="pointer"
         _before={{
           content: '""',
           position: 'absolute',
