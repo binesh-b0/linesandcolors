@@ -127,11 +127,11 @@ const TopNavbar: React.FC = () => {
       <AnimatePresence>
         {dropdownOpen && (
           <motion.div
-            className="fixed top-14 right-0 mt-2 bg-white shadow-md p-4 z-50"
+            className="fixed top-14 right-0 mt-2 bg-white shadow-md p-4"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            style={{ height: '300px', width: '250px', right: '10px' }}
+            style={{ height: '300px', width: '250px', right: '10px',zIndex:'52' }}
             onMouseEnter={() => setDropdownOpen(dropdownOpen)}
             onMouseLeave={() => setDropdownOpen(null)}
           >
