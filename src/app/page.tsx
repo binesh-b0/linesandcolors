@@ -5,6 +5,7 @@ import TrustedCustomers from '@/components/home/TrustedCustomers';
 import MailingList from '@/components/home/MailingList';
 import Hero from '@/components/home/Hero';
 import Footer from '@/components/Footer/Footer';
+import Services from '@/components/home/Services';
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
       {/* <Advertisement /> */}
       {/* Main Section: Add your main content here */}
       <Hero />
+      <Services />
+      {/* Featured products */}
+      {/* Testimonials */}
       <TrustedCustomers />
       <MailingList />
     </div>
