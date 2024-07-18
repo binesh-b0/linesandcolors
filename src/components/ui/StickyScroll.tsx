@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll, motion } from "framer-motion";
 import { Box, Image, Heading, Text, Flex } from '@chakra-ui/react';
+import Sticky from 'react-sticky-el';
+
 
 const StickyScroll = ({ content } : { content: any[] }) => {
     const [activeCard, setActiveCard] = useState(0);
@@ -41,7 +43,6 @@ const StickyScroll = ({ content } : { content: any[] }) => {
                             transition={{ duration: 0.6 }}
                             mb={10}
                             pt={10}
-                            pb={10}
                             style={{ marginTop: activeCard === index ? 35 : 20 }}
                             textAlign={{ base: 'center', lg: 'left' }}
                         >
@@ -67,13 +68,13 @@ const StickyScroll = ({ content } : { content: any[] }) => {
                 >
                     <motion.div
                         key={activeCard}
+                        position='sticky'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ position: 'relative', zIndex: 1, justifyContent: 'center', alignItems: 'center' }}
-                        whileInView={{ y: [-20, 20] }}  // Apply slight parallax effect
-                        viewport={{ once: false, amount: 0.8 }}
+                        transition={{ duration: '2' }}
+                        style={{  zIndex: 1, justifyContent: 'center', alignItems: 'center' }}
+                        // viewport={{ once: false, amount: 0.8 }}
                     >
                         <Image src={content[activeCard].image} alt={content[activeCard].title} boxSize="300px" objectFit="contain" />
                     </motion.div>
