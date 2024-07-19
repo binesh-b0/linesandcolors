@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaBell, FaCreditCard, FaCogs } from 'react-icons/fa';
-import AccountDetails from '@/components/AccountDetails';
-import NotificationSettings from '@/components/NotificationSettings';
-import BillingPayments from '@/components/BillingPayments';
-import Preferences from '@/components/Preferences';
+import AccountDetails from '@/components/Account/AccountDetails';
+import NotificationSettings from '@/components/Account/NotificationSettings';
+import BillingPayments from '@/components/Account/BillingPayments';
+import Preferences from '@/components/Account/Preferences';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutStart } from '@/redux/slices/authSlice';
 import { fetchSessionStart, fetchUserDetailsStart } from '@/redux/slices/authSlice';

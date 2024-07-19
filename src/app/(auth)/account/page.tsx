@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
-import AccountTabs from '@/components/AccountTabs';
+import AccountTabs from '@/components/Account/AccountTabs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { fetchSessionStart } from '@/redux/slices/authSlice';
