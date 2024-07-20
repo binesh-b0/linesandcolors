@@ -42,11 +42,11 @@ export default function Footer() {
   }, []);
 
   return (
-    <Box as="footer" className="bg-gray-900 text-white py-16 pb-124mt -12" minHeight="50vh" ref={footerRef}>
-      <Box className='overflow-x-hidden'
+    <Box as="footer" className="bg-gray-900 text-white py-16 pb-124 mt-12 overflow-x-hidden relative hide-scrollbar" minHeight="50vh" ref={footerRef}>
+      <Box position="absolute"
         display={{ base: 'none', md: 'block' }} maxW={'600px'} maxH={'600px'}
         //  style = {{ width: '100%', height: '100%' }}
-        bottom={200} right={-20} zIndex={10}>
+        bottom={200} right={-20}>
         {isVisible && (
           <Canvas
             className="absolute" shadows
@@ -58,7 +58,7 @@ export default function Footer() {
             <directionalLight position={[1, 1, 10]} intensity={1.5} />
             <directionalLight position={[-1, 1, 10]} intensity={1.5} />
 
-            <Environment preset="sunset" />
+            <Environment preset="warehouse" />
             <spotLight position={[5, 15, 5]} angle={0.5} penumbra={1} intensity={2} />
             <Model scale={2} position={[0, 0, 0]} />
           </Canvas>
@@ -76,7 +76,7 @@ export default function Footer() {
             © 2024 lnc. All rights reserved.
           </Text>
           <HStack spacing={4} mt={4}>
-            <Link href='#' _hover={{ color: 'teal.400' }} cursor={'pointer'} ><FaFacebook size="24" /></Link>
+            <Link href='www.facebook.com' _hover={{ color: 'teal.400' }} cursor={'pointer'} ><FaFacebook size="24" /></Link>
             <FaTwitter size="24" />
             <FaInstagram size="24" />
             <FaLinkedin size="24" />
