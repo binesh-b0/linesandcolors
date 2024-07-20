@@ -10,6 +10,20 @@ import Image from 'next/image';
 import { url } from 'inspector';
 import { Environment } from '@react-three/drei'
 
+const social = [{
+  name: 'Facebook',
+  icon: FaFacebook,
+  url: 'https://www.facebook.com',
+}, {
+  name: 'X',
+  icon: FaTwitter,
+  url: 'https://www.twitter.com'
+}, {
+  name: 'Instagram',
+  icon: FaInstagram,
+  url: 'https://www.instagram.com'
+}]
+
 export default function Footer() {
   const footerRef = useRef();
   const [isVisible, setIsVisible] = useState(false);
@@ -42,7 +56,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <Box as="footer" className="bg-gray-900 text-white py-16 pb-124 mt-12 overflow-x-hidden relative hide-scrollbar" minHeight="50vh" ref={footerRef}>
+    <Box as="footer" className="bg-gray-900 text-white pt-16 mt-12 overflow-x-hidden relative hide-scrollbar" minHeight="50vh" ref={footerRef} style={{paddingBottom: '124px'}}>
       <Box position="absolute"
         display={{ base: 'none', md: 'block' }} maxW={'600px'} maxH={'600px'}
         //  style = {{ width: '100%', height: '100%' }}
@@ -72,14 +86,20 @@ export default function Footer() {
           <Text fontSize="sm" color="gray.400">
             We are dedicated to building a future with safe AI. Our mission is to leverage advanced technology to create a better world.
           </Text>
-          <Text className="text-gray-400 mt-8">
+          <Text className="text-gray-400 mt-8" fontSize="sm">
             © 2024 lnc. All rights reserved.
           </Text>
-          <HStack spacing={4} mt={4}>
-            <Link href='www.facebook.com' _hover={{ color: 'teal.400' }} cursor={'pointer'} ><FaFacebook size="24" /></Link>
+          <HStack spacing={4}>
+            {social.map((item) => (
+              <Link as="a" key={item.name} href={item.url} _hover={{ color: 'teal.400' }} cursor={'pointer'} >
+                <item.icon size="18" />
+              </Link>
+            ))}
+
+            {/* <Link href='www.facebook.com' _hover={{ color: 'teal.400' }} cursor={'pointer'} ><FaFacebook size="24" /></Link>
             <FaTwitter size="24" />
             <FaInstagram size="24" />
-            <FaLinkedin size="24" />
+            <FaLinkedin size="24" /> */}
           </HStack>
         </VStack>
         <VStack align="start" spacing={4} w="20%">
@@ -119,7 +139,7 @@ export default function Footer() {
             className='glitch'
              />
         </Box>
-        {/* <a href="https://storyset.com/online" className="text-xs text-gray-500">Online illustrations by Storyset</a> */}
+        <a href="https://storyset.com/online" className="text-xs text-gray-500">Online illustrations by Storyset</a>
       </Box>
 
     </Box>
