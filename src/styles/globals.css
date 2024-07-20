@@ -18,4 +18,61 @@ body {
 }
 
 
-  
+@keyframes glitch {
+  0% {
+    clip: rect(20px, 9999px, 100px, 0);
+    transform: skew(0.02deg);
+  }
+  2% {
+    clip: rect(50px, 9999px, 80px, 0);
+    transform: skew(0.02deg);
+  }
+  4% {
+    clip: rect(30px, 9999px, 70px, 0);
+    transform: skew(0.02deg);
+  }
+  6% {
+    clip: rect(40px, 9999px, 60px, 0);
+    transform: skew(0.02deg);
+  }
+  8% {
+    clip: rect(50px, 9999px, 90px, 0);
+    transform: skew(0.02deg);
+  }
+  10% {
+    clip: rect(20px, 9999px, 100px, 0);
+    transform: skew(0.02deg);
+  }
+  100% {
+    clip: rect(20px, 9999px, 100px, 0);
+    transform: skew(0.02deg);
+  }
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 10s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+}
+
+.glitch::before {
+  animation: glitch 5s infinite;
+  top: -2px;
+  left: 2px;
+  color: lime;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch 5s infinite;
+  top: 2px;
+  left: -2px;
+  color: red;
+  z-index: -1;
+}

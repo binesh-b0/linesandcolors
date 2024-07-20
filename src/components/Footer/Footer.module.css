@@ -1,0 +1,100 @@
+/* components/Footer.module.css */
+
+.footer {
+  background: #121212;
+  color: white;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 150px;
+}
+
+.companyName {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 5px;
+}
+
+.designedBy {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #bbb;
+}
+
+.contactButton {
+  padding: 10px 20px;
+  background-color: #333;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links div {
+  margin-right: 40px;
+}
+
+.links h3 {
+  margin-bottom: 10px;
+}
+
+.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.links li {
+  margin-bottom: 5px;
+}
+
+.right {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+.right canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -50px; /* Adjust this value to overflow the model to the top */
+  right: -50px; /* Adjust this value to overflow the model to the top */
+}
+
+.footerBottom {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #bbb;
+}
