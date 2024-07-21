@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation, useInView } from "framer-motion";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
 import { Icon, useBreakpointValue } from "@chakra-ui/react";
 import { useToast, Box, Input, Button, VStack, Text, Center } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
-const joinText = "Welcome to Lines and Colors. Stay updated with our latest news and exclusive offers. By subscribing to our mailing list, you'll be the first to know about our latest art collections, upcoming events, and special promotions. Join our community of art enthusiasts and never miss out on important updates. Get inspired by exclusive content, behind-the-scenes insights, and tips from top artists. Subscribe now and become a part of our vibrant and creative world."
+const joinText = "Welcome to Lines and Colors. Stay updated with our latest news and exclusive offers. By subscribing to our mailing list, you'll be the first to know about our latest art collections, upcoming events, and special promotions. Join our community of art enthusiasts and never miss out on important updates. Get inspired by exclusive content, behind-the-scenes insights, and tips from top artists. Subscribe now and become a part of our vibrant and creative world.";
 
 const JoinMailingList = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const toast = useToast();
   const controls = useAnimation();
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +21,11 @@ const JoinMailingList = () => {
     setIsValidEmail(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value));
   };
 
+  const buttonWidth = useBreakpointValue({ base: '100%', md: '20%', lg: '30%' });
+  const inputWidth = useBreakpointValue({ base: '100%', md: isValidEmail ? '80%' : '100%', lg: isValidEmail ? '70%' : '100%' });
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isValidEmail) {
       toast({
@@ -79,11 +81,11 @@ const JoinMailingList = () => {
           justifyContent: 'center',
         }}
       >
-      <Box>
+        <Box>
           <BackgroundBeams className="absolute inset-0 z-1" />
           <VStack spacing={4} position="relative" zIndex={1} style={{ width: '100%' }}>
-            <Text fontSize="2xl" fontWeight="bold" >Join Our Mailing List</Text>
-            <Text maxW={'850px'} mx={'auto'}>{joinText}</Text>
+            <Text fontSize="2xl" fontWeight="bold">Join Our Mailing List</Text>
+            <Text maxW={'850px'} mx={'12'}>{joinText}</Text>
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <Box
                 display="flex"
@@ -93,10 +95,11 @@ const JoinMailingList = () => {
                 width={'100%'}
                 flexDirection={isSmallScreen ? "column" : "row"}
                 gap={isSmallScreen ? 4 : 0}
+                paddingX={isSmallScreen ? 12 : 32}
               >
                 <motion.div
-                  style={{ display: 'flex', width: '100%', maxWidth: '600px' }}
-                  animate={{ width: isValidEmail && !isSmallScreen ? 'calc(100% - 140px)' : '100%' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: inputWidth}}
+                  animate={{ width: inputWidth }}
                   transition={{ duration: 0.3 }}
                 >
                   <Input
@@ -106,38 +109,40 @@ const JoinMailingList = () => {
                     onChange={handleChange}
                     bg="whiteAlpha.900"
                     color="black"
+                    borderTopRightRadius={isValidEmail && !isSmallScreen ? 0 : '0.5rem'}
+                    borderBottomRightRadius={isValidEmail && !isSmallScreen ? 0 : '0.5rem'}
                     _placeholder={{ color: 'gray.500' }}
                     borderColor="gray.300"
                     flex="1"
-                    pr="1rem"
-                    _focus={{ borderColor: 'teal.500', boxShadow: 'none',
-                    borderTopRightRadius: isValidEmail? 0 : '0.5rem',
-                     borderBottomRightRadius: isValidEmail? 0 : '0.5rem' 
-                   }}
+                    _focus={{
+                      borderColor: 'teal.500',
+                      boxShadow: 'none',
+                      borderTopRightRadius: isValidEmail && !isSmallScreen ? 0 : '0.5rem',
+                      borderBottomRightRadius: isValidEmail && !isSmallScreen ? 0 : '0.5rem'
+                    }}
                     _active={{ borderColor: 'transparent', boxShadow: 'none' }}
                   />
-                  <AnimatePresence>
-                    {isValidEmail && (
-                      <motion.div
-                        initial={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
-                        animate={{ opacity: 1, width: isSmallScreen ? '100%' : '140px' }}
-                        exit={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Button
-                          type="submit"
-                          colorScheme="teal"
-                          ml={isSmallScreen ? 0 : -4}
-                          borderTopLeftRadius={0}
-                          borderBottomLeftRadius={0}
-                          w="100%"
-                        >
-                          <Icon as={ArrowForwardIcon} w={6} h={6} />
-                        </Button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </motion.div>
+                <AnimatePresence>
+                  {isValidEmail && (
+                    <motion.div
+                      initial={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
+                      animate={{ opacity: 1, width: buttonWidth }}
+                      exit={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    >
+                      <Button
+                        type="submit"
+                        colorScheme="teal"
+                        w="100%"
+                        borderTopLeftRadius={isSmallScreen ? '0.25rem' : 0}
+                        borderBottomLeftRadius={isSmallScreen ? '0.25rem' : 0}
+                      >
+                        <Icon as={ArrowForwardIcon} w={6} h={6} />
+                      </Button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </Box>
             </form>
           </VStack>
