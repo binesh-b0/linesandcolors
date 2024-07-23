@@ -7,7 +7,9 @@ import Footer from '@/components/Footer/Footer';
 import Services from '@/components/home/Services';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import JoinMailingList from '@/components/home/JoinMailList';
+import ImageShowcase from '@/components/home/ImageShowcase';
 
+// import { motion } from 'framer-motion'
 export default function Home() {
   return (
     <div className='container-fluid mx-auto'>
@@ -15,6 +17,7 @@ export default function Home() {
       <Hero />
       <Services />
       <FeaturedProducts />
+      <ImageShowcase />
       {/* Testimonials */}
       <TrustedCustomers />
       <JoinMailingList />
