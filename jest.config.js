@@ -5,6 +5,15 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testMatch: ['<rootDir>/tests/**/*.(test|spec).[jt]s?(x)'], // Add this line to explicitly set the test folder
-
+  testMatch: [
+    '<rootDir>/src/**/__tests__/**/*.(test|spec).[jt]s?(x)',
+    '<rootDir>/tests/**/*.(test|spec).[jt]s?(x)'
+  ],
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!@chakra-ui/react)', // Adjust as needed to include other modules
+  ],
 };

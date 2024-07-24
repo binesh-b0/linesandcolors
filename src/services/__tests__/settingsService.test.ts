@@ -6,10 +6,11 @@ import {
   addAddress,
   updateAddress,
   deleteAddress,
-} from '@/services/settingsService';
-import { getUserSettings, updateUserSettings, getBillingDetails, updateBillingDetails } from '@/models/Settings';
-import { AddressModel } from '@/models/Address';
+} from '@/services/settingsService'; // Import service functions to test
+import { getUserSettings, updateUserSettings, getBillingDetails, updateBillingDetails } from '@/models/Settings'; // Mocked model functions
+import { AddressModel } from '@/models/Address'; // Mocked model functions for address
 
+// Mocking the models
 jest.mock('@/models/Settings');
 jest.mock('@/models/Address');
 
@@ -47,10 +48,12 @@ describe('Settings Service', () => {
     deleted_at: null,
   };
 
+  // Clear all mocks before each test
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
+  // Test fetchUserSettings
   describe('fetchUserSettings', () => {
     it('should fetch user settings by user ID', async () => {
       (getUserSettings as jest.Mock).mockResolvedValue(mockSettings);
@@ -62,6 +65,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test saveUserSettings
   describe('saveUserSettings', () => {
     it('should update user settings', async () => {
       (updateUserSettings as jest.Mock).mockResolvedValue(mockSettings);
@@ -73,6 +77,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test fetchBillingDetails
   describe('fetchBillingDetails', () => {
     it('should fetch billing details by user ID', async () => {
       const mockResult = {
@@ -88,6 +93,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test saveBillingDetails
   describe('saveBillingDetails', () => {
     it('should update billing details', async () => {
       (updateBillingDetails as jest.Mock).mockResolvedValue(mockBillingDetails);
@@ -99,6 +105,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test addAddress
   describe('addAddress', () => {
     it('should add a new address', async () => {
       (AddressModel.createAddress as jest.Mock).mockResolvedValue(mockAddress);
@@ -110,6 +117,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test updateAddress
   describe('updateAddress', () => {
     it('should update an existing address', async () => {
       (AddressModel.updateAddress as jest.Mock).mockResolvedValue(mockAddress);
@@ -121,6 +129,7 @@ describe('Settings Service', () => {
     });
   });
 
+  // Test deleteAddress
   describe('deleteAddress', () => {
     it('should delete an address by ID', async () => {
       (AddressModel.deleteAddress as jest.Mock).mockResolvedValue(undefined);
