@@ -5,26 +5,30 @@ import { Icon, useBreakpointValue } from "@chakra-ui/react";
 import { useToast, Box, Input, Button, VStack, Text, Center } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
+// Text to display in the component
 const joinText = "Welcome to Lines and Colors. Stay updated with our latest news and exclusive offers. By subscribing to our mailing list, you'll be the first to know about our latest art collections, upcoming events, and special promotions. Join our community of art enthusiasts and never miss out on important updates. Get inspired by exclusive content, behind-the-scenes insights, and tips from top artists. Subscribe now and become a part of our vibrant and creative world.";
 
 const JoinMailingList = () => {
-  const [email, setEmail] = useState("");
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const toast = useToast();
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [email, setEmail] = useState(""); // State to store the email input
+  const [isValidEmail, setIsValidEmail] = useState(false); // State to check if the email is valid
+  const toast = useToast(); // Hook to display toast notifications
+  const controls = useAnimation(); // Controls for animation
+  const ref = useRef(null); // Reference for the component to observe
+  const isInView = useInView(ref, { once: true }); // Check if the component is in view
 
+  // Handle change in email input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    setIsValidEmail(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value));
+    setIsValidEmail(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)); // Validate email
   };
 
+  // Breakpoints for responsive design
   const buttonWidth = useBreakpointValue({ base: '100%', md: '20%', lg: '30%' });
   const inputWidth = useBreakpointValue({ base: '100%', md: isValidEmail ? '80%' : '100%', lg: isValidEmail ? '70%' : '100%' });
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isValidEmail) {
@@ -35,8 +39,8 @@ const JoinMailingList = () => {
         duration: 5000,
         isClosable: true,
       });
-      setEmail("");
-      setIsValidEmail(false);
+      setEmail(""); // Clear email input
+      setIsValidEmail(false); // Reset email validation
       // Implement API call here
     } else {
       toast({
@@ -49,6 +53,7 @@ const JoinMailingList = () => {
     }
   };
 
+  // Effect to start animation when component is in view
   useEffect(() => {
     if (isInView) {
       controls.start({
@@ -98,8 +103,8 @@ const JoinMailingList = () => {
                 paddingX={isSmallScreen ? 12 : 32}
               >
                 <motion.div
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: inputWidth}}
-                  animate={{ width: inputWidth }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                  animate={{ flex: isValidEmail ? 0.7 : 1 }}
                   transition={{ duration: 0.3 }}
                 >
                   <Input
@@ -113,7 +118,6 @@ const JoinMailingList = () => {
                     borderBottomRightRadius={isValidEmail && !isSmallScreen ? 0 : '0.5rem'}
                     _placeholder={{ color: 'gray.500' }}
                     borderColor="gray.300"
-                    flex="1"
                     _focus={{
                       borderColor: 'teal.500',
                       boxShadow: 'none',
@@ -126,10 +130,11 @@ const JoinMailingList = () => {
                 <AnimatePresence>
                   {isValidEmail && (
                     <motion.div
-                      initial={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
-                      animate={{ opacity: 1, width: buttonWidth }}
-                      exit={{ opacity: 0, width: isSmallScreen ? '100%' : '0%' }}
-                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                      initial={{ opacity: 0, flex: 0 }}
+                      animate={{ opacity: 1, flex: 0.3 }}
+                      exit={{ opacity: 0, flex: 0 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ display: 'flex' }}
                     >
                       <Button
                         type="submit"
