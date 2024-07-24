@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Box, VStack, Heading, Text, Button } from '@chakra-ui/react';
-import { verifyEmail } from '@/services/auth';
+import { verifyEmail } from '@/services/authService';
 import { UserAttributes } from '@supabase/supabase-js';
 
 const VerifyEmail: React.FC = () => {
