@@ -34,8 +34,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <AdNavbar />
               {/* Main content */}
               {children}
-              {/* Footer */}
-              <Footer />
+              {/* <Footer /> */}
             </ThemeProvider>
           </ChakraProvider>
         </Provider>

@@ -1,5 +1,5 @@
 // Import necessary components and icons
-import { Box, Heading, Text, VStack, Image, Button, IconButton } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Image, Button, IconButton, keyframes } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
@@ -11,6 +11,18 @@ const MotionBox = motion(Box);
 const Z_INDEX_BACKGROUND = 0;
 const Z_INDEX_CONTENT = 2;
 const Z_INDEX_ARROW = 3;
+
+const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 interface ProductItemProps {
   title: string;
@@ -160,17 +172,29 @@ const FeaturedProducts = () => {
 
   return (
     <Box position="relative" py={8} px={4} bg="white" color="teal.700" overflow="hidden">
-      <Heading as="h2" textAlign="left" ml={8} mb={8} fontSize={{ base: '2xl', md: '3xl' }} color="teal.800" zIndex={6}>
+      <Heading position={'relative'} zIndex={Z_INDEX_CONTENT} as="h2" textAlign="left" ml={8} mb={8} fontSize={{ base: 'xl', md: 'xl' }} fontWeight={'thin'} color="teal.900">
         Featured Products
       </Heading>
       <FeaturedProductsRow items={featuredProducts} />
-      <Heading as="h3" textAlign="left" ml={8} mt={12} mb={8} fontSize={{ base: '2xl', md: '3xl' }} color="teal.800" zIndex={6}>
+      <Heading position={'relative'} zIndex={Z_INDEX_CONTENT} as="h2" textAlign="left" ml={8} mt={12} mb={8} fontSize={{ base: 'xl', md: 'xl' }} fontWeight={'thin'} color="teal.900" zIndex={6}>
         Products to Watch Out For
       </Heading>
       <FeaturedProductsRow items={productsToWatchOutFor} />
       <Box position="absolute" top="0" left="0" width="100%" height="100%" zIndex={Z_INDEX_BACKGROUND} overflow="hidden">
         {/* Gradient Background */}
-        <Box position="absolute" zIndex={Z_INDEX_BACKGROUND} top="0" left="0" width="100%" height="100%" bgGradient="linear(to-r, teal.500, green.300)" opacity="0.4" />
+        <Box
+          position="absolute"
+          zIndex={Z_INDEX_BACKGROUND}
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          bgGradient="radial(teal.600, teal.200,white)"
+          opacity="0.9"
+          backgroundSize="200% 200%"
+          animation={`${gradientAnimation} 15s ease infinite`} />
+
+
         {/* Animated Background Elements */}
         <motion.div
           style={{
