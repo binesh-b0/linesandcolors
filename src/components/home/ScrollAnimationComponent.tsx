@@ -30,7 +30,7 @@ const useScrollProgress = () => {
 // Define animation variants for the main card
 const cardVariants = {
   initial: { scale: 0.9, boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' },
-  scroll: (scrollProgress) => ({
+  scroll: (scrollProgress: number) => ({
     scale: 0.95 + scrollProgress * 0.1,
     boxShadow: `0px 0px ${scrollProgress * 30}px rgba(0, 128, 128, 0.5)`,
     transition: { duration: 0.1 },
@@ -41,7 +41,7 @@ const cardVariants = {
 // Define animation variants for the content inside the card
 const contentVariants = {
   initial: { opacity: 0, y: 50 },
-  scroll: (scrollProgress) => ({
+  scroll: (scrollProgress: number) => ({
     opacity: Math.min(scrollProgress * 5, 1),
     y: 0,
     transition: { duration: 0.5 }
@@ -50,7 +50,7 @@ const contentVariants = {
 
 const imageVariants = {
   initial: { width: '0px', height: '0px', borderRadius: '50%' },
-  scroll: (scrollProgress) => ({
+  scroll: (scrollProgress: number) => ({
     width: `${150 * scrollProgress}px`,
     height: `${150 * scrollProgress}px`,
     borderRadius: '50%',
@@ -60,7 +60,7 @@ const imageVariants = {
 
 const textVariants = {
   initial: { opacity: 0, y: 50 },
-  scroll: (scrollProgress) => ({
+  scroll: (scrollProgress: number) => ({
     opacity: Math.min(scrollProgress * 5, 1),
     y: 0,
     transition: { duration: 0.5 }
@@ -70,7 +70,7 @@ const textVariants = {
 // Gloss effect
 const glossVariants = {
   initial: { opacity: 0, x: '-150%' },
-  scroll: (scrollProgress) => ({
+  scroll: (scrollProgress: number) => ({
     opacity: 0.5,
     x: `${scrollProgress * 200}%`,
     transition: { duration: 0.1 }
