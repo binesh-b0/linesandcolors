@@ -176,7 +176,7 @@ const FeaturedProducts = () => {
         Featured Products
       </Heading>
       <FeaturedProductsRow items={featuredProducts} />
-      <Heading position={'relative'} zIndex={Z_INDEX_CONTENT} as="h2" textAlign="left" ml={8} mt={12} mb={8} fontSize={{ base: 'xl', md: 'xl' }} fontWeight={'thin'} color="teal.900" zIndex={6}>
+      <Heading position={'relative'} zIndex={Z_INDEX_CONTENT} as="h2" textAlign="left" ml={8} mt={12} mb={8} fontSize={{ base: 'xl', md: 'xl' }} fontWeight={'thin'} color="teal.900">
         Products to Watch Out For
       </Heading>
       <FeaturedProductsRow items={productsToWatchOutFor} />
