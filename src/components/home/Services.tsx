@@ -38,7 +38,7 @@ const Services = () => {
   return (
     <Box py={10} mb={32} px={10} bg="white" color="teal.700">
       <Heading as="h2" textAlign="center" mb={10} fontSize={{ base: '2xl', md: '4xl' }}>
-        How We Can Help Your Business or Personal Needs
+        How We Can Help Your Business And Personal Needs
       </Heading>
       <Flex direction={{ base: 'column', md: 'row' }} wrap="wrap" justify="center" align="center">
         {content.map((item, index) => (
