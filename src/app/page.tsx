@@ -22,8 +22,8 @@ export default function Home() {
       <AllProducts />
       <ImageShowcase />
       {/* Testimonials */}
-      <TrustedCustomers />
       <Testimonials />
+      <TrustedCustomers />
       <JoinMailingList />
     </div>
   );
