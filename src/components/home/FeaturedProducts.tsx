@@ -94,6 +94,11 @@ const FeaturedProductsRow: React.FC<{ items: ProductItemProps[] }> = ({ items })
     }
   };
 
+  // Calculate the scroll offset based on the width of the items and number of items to scroll
+  const itemWidth = 250 + 20; // Item width + margin
+  const numItemsToScroll = 3;
+  const scrollOffset = itemWidth * numItemsToScroll;
+
   return (
     <Box position="relative" py={8} px={4} bg="white" color="teal.700" overflow="hidden">
       <Box
@@ -130,7 +135,7 @@ const FeaturedProductsRow: React.FC<{ items: ProductItemProps[] }> = ({ items })
           left="10px"
           transform="translateY(-50%)"
           zIndex={Z_INDEX_ARROW}
-          onClick={() => scroll(-300)}
+          onClick={() => scroll(-scrollOffset)}
           bg="teal.500"
           color="white"
           _hover={{ bg: 'teal.600' }}
@@ -145,7 +150,7 @@ const FeaturedProductsRow: React.FC<{ items: ProductItemProps[] }> = ({ items })
           right="10px"
           transform="translateY(-50%)"
           zIndex={Z_INDEX_ARROW}
-          onClick={() => scroll(300)}
+          onClick={() => scroll(scrollOffset)}
           bg="teal.500"
           color="white"
           _hover={{ bg: 'teal.600' }}
