@@ -11,35 +11,35 @@ const Testimonials = () => {
       image: "https://i.pravatar.cc/150?img=1",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       role: "Teacher, Alampur",
-      rating: Math.floor(Math.random() * 2) + 4 // Randomize stars between 4 and 5
+      rating: 5
     },
     {
       name: "John Doe",
       image: "https://i.pravatar.cc/150?img=2",
       text: "I knew I was going to get great service, but they went above and beyond my expectations.",
       role: "Software Engineer",
-      rating: Math.floor(Math.random() * 2) + 4
+      rating: 4
     },
     {
       name: "Asa Walter",
       image: "https://i.pravatar.cc/150?img=3",
       text: "This is the best thing that happened to my small business. They re-branded, re-organized and re-vamped my company in no time.",
       role: "Entrepreneur",
-      rating: Math.floor(Math.random() * 2) + 4
+      rating: 5
     },
     {
       name: "Zahid Miles",
       image: "https://i.pravatar.cc/150?img=4",
       text: "They are great. They did exactly what I needed. The friendly chaps are real problem solvers. Loved working with them.",
       role: "Consultant",
-      rating: Math.floor(Math.random() * 2) + 4
+      rating: 4
     },
     {
       name: "Casper Leigh",
       image: "https://i.pravatar.cc/150?img=5",
       text: "Awesome services. I am really happy to be here because of their services. I will continue to use their services in the future.",
       role: "Designer",
-      rating: Math.floor(Math.random() * 2) + 4
+      rating: 5
     }
   ];
 
@@ -108,10 +108,10 @@ const Testimonials = () => {
             <VStack spacing={3} p={5} alignItems={{ base: 'center', lg: 'start' }} flex="2">
               <HStack spacing={1}>
                 {[...Array(testimonials[current].rating)].map((_, i) => (
-                    <Box key={i} as="span" color="yellow.400" fontSize="lg" animation={i < 4 ? `${fullStarAnimation} 1s` : `${starAnimation} 1s`}>★</Box>
+                  <Box key={i} as="span" color="yellow.400" fontSize="lg" animation={i < 4 ? `${fullStarAnimation} 1s` : `${starAnimation} 1s`}>★</Box>
                 ))}
               </HStack>
-                <Text fontSize="sm" color="gray.600">{testimonials[current].text}</Text>
+              <Text fontSize="sm" color="gray.600">{testimonials[current].text}</Text>
             </VStack>
           </Flex>
         </Box>
