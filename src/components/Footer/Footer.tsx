@@ -2,13 +2,9 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { Box, Flex, Text, VStack, HStack, Heading, Link } from '@chakra-ui/react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import Model from '@/components/ui/Model'; // Ensure the correct path to your Model component
 import Image from 'next/image';
 import { url } from 'inspector';
-import { Environment } from '@react-three/drei'
 
 const social = [{
   name: 'Facebook',
@@ -57,27 +53,6 @@ export default function Footer() {
 
   return (
     <Box as="footer" className="bg-gray-900 text-white pt-16 mt-12 overflow-x-hidden relative hide-scrollbar" minHeight="50vh" ref={footerRef} style={{paddingBottom: '124px'}}>
-      <Box position="absolute"
-        display={{ base: 'none', md: 'block' }} maxW={'600px'} maxH={'600px'}
-        //  style = {{ width: '100%', height: '100%' }}
-        bottom={200} right={-20}>
-        {isVisible && (
-          <Canvas
-            className="absolute" shadows
-            style={{ width: '300px', height: '300px' }}
-          >
-            <ambientLight intensity={2} />
-            <directionalLight position={[10, 10, 10]} intensity={1.5} />
-            <directionalLight position={[-10, 10, 10]} intensity={1.5} />
-            <directionalLight position={[1, 1, 10]} intensity={1.5} />
-            <directionalLight position={[-1, 1, 10]} intensity={1.5} />
-
-            <Environment preset="warehouse" />
-            <spotLight position={[5, 15, 5]} angle={0.5} penumbra={1} intensity={2} />
-            <Model scale={2} position={[0, 0, 0]} />
-          </Canvas>
-        )}
-      </Box>
       <Flex className="container mx-auto px-8 mt-12" justify="space-between" align="start" position="relative">
         <VStack align="start" spacing={4} w="30%">
           <Heading as="h3" size="md" mb={4}>

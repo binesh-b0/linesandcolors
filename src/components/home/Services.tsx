@@ -1,6 +1,5 @@
 "use client";
-import { Box, Heading } from '@chakra-ui/react';
-import StickyScroll from '@/components/ui/StickyScroll';
+import { Box, Heading, Flex, Image, Text } from '@chakra-ui/react';
 
 const Services = () => {
   const content = [
@@ -37,11 +36,19 @@ const Services = () => {
   ];
 
   return (
-    <Box py={10} px={10} bg="white" color="teal.700">
+    <Box py={10} mb={32} px={10} bg="white" color="teal.700">
       <Heading as="h2" textAlign="center" mb={10} fontSize={{ base: '2xl', md: '4xl' }}>
         How We Can Help Your Business or Personal Needs
       </Heading>
-      <StickyScroll content={content} />
+      <Flex direction={{ base: 'column', md: 'row' }} wrap="wrap" justify="center" align="center">
+        {content.map((item, index) => (
+          <Box key={index} textAlign="center" p={5} m={2} maxWidth="300px">
+            <Image src={item.image} alt={item.title} boxSize="100px" mx="auto" mb={4} />
+            <Text fontSize={{ base: 'lg', md: 'xl' }}>{item.title}</Text>
+            <Text fontSize={{ base: 'sm', md: 'md' }}>{item.description}</Text>
+          </Box>
+        ))}
+      </Flex>
     </Box>
   );
 };
