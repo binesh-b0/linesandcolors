@@ -9,7 +9,6 @@ import FeaturedProducts from '@/components/home/FeaturedProducts';
 import JoinMailingList from '@/components/home/JoinMailList';
 import ImageShowcase from '@/components/home/ImageShowcase';
 import AllProducts from '@/components/home/AllProducts';
-import ScrollAnimationComponent from '@/components/home/ScrollAnimationComponent';
 
 // import { motion } from 'framer-motion'
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
       <ImageShowcase />
       {/* Testimonials */}
       <TrustedCustomers />
-      <ScrollAnimationComponent />
       <JoinMailingList />
     </div>
   );
