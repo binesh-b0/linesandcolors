@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
 import { Box, Flex, Text, VStack, HStack, Heading, Link, IconButton } from '@chakra-ui/react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaArrowUp } from 'react-icons/fa';
 import Image from 'next/image';
 
+// Social media links array
 const social = [
   { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com' },
   { name: 'Twitter', icon: FaTwitter, url: 'https://www.twitter.com' },
@@ -13,16 +14,17 @@ const social = [
 ];
 
 export default function Footer() {
-  const footerRef = useRef();
-  const [isVisible, setIsVisible] = useState(false);
-  const [showScrollButton, setShowScrollButton] = useState(false);
+  const footerRef = useRef<HTMLDivElement | null>(null); // Correct type for the footer element ref
+  const [showScrollButton, setShowScrollButton] = useState(false); // State to track visibility of the scroll-to-top button
 
+  // Effect to handle intersection observer for the footer visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
+          setShowScrollButton(true);
+        } else {
+          setShowScrollButton(false);
         }
       },
       {
@@ -43,25 +45,33 @@ export default function Footer() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollButton(true);
-      } else {
-        setShowScrollButton(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Function to scroll to the top of the page
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <Box as="footer" bg="white" color="teal.900" pt={16} mt={12} overflowX="hidden" ref={footerRef} minHeight="70vh" position="relative">
-      <Flex className="container" justify="space-between" align="start" px={{ base: 4, md: 8 }} py={8} mx="auto" flexWrap="wrap">
+    <Box
+      as="footer"
+      bg="white"
+      color="teal.900"
+      pt={16}
+      mt={12}
+      overflowX="hidden"
+      ref={footerRef}
+      minHeight="70vh"
+      position="relative"
+    >
+      <Flex
+        className="container"
+        justify="space-between"
+        align="start"
+        px={{ base: 4, md: 8 }}
+        py={8}
+        mx="auto"
+        flexWrap="wrap"
+      >
+        {/* Company information section */}
         <VStack align="start" spacing={4} w={{ base: "100%", md: "30%" }}>
           <Heading as="h3" size="md" mb={4}>
             About the Company
@@ -69,7 +79,9 @@ export default function Footer() {
           <Text fontSize="sm" color="teal.700">
             We are dedicated to building a future with safe AI. Our mission is to leverage advanced technology to create a better world.
           </Text>
-          <Link href="https://storyset.com/online" fontSize="xs" color="teal.500" isExternal>Online illustrations by Storyset</Link>
+          <Link href="https://storyset.com/online" fontSize="xs" color="teal.500" isExternal>
+            Online illustrations by Storyset
+          </Link>
           <Text fontSize="sm" color="teal.700" mt={8}>
             © 2024 Inc. All rights reserved.
           </Text>
@@ -81,6 +93,8 @@ export default function Footer() {
             ))}
           </HStack>
         </VStack>
+
+        {/* Navigation section */}
         <VStack align="start" spacing={4} w={{ base: "100%", md: "20%" }}>
           <Heading as="h3" size="md">
             Navigation
@@ -93,6 +107,8 @@ export default function Footer() {
             <Link href="#" _hover={{ color: 'teal.400' }}>Contact</Link>
           </VStack>
         </VStack>
+
+        {/* Documentation section */}
         <VStack align="start" spacing={4} w={{ base: "100%", md: "20%" }}>
           <Heading as="h3" size="md">
             Documentation
@@ -108,8 +124,9 @@ export default function Footer() {
         </VStack>
       </Flex>
 
+      {/* Decorative image section */}
       <Box position="absolute" bottom={0} width="100%" textAlign="center">
-        <Box width="100%" height="160px" alignItems="center" text="teal.600">
+        <Box width="100%" height="160px" alignItems="center" color="teal.600">
           <Image
             src={'/linesandcolors.svg'} alt=""
             layout="fill"
@@ -119,6 +136,7 @@ export default function Footer() {
         </Box>
       </Box>
 
+      {/* Scroll to top button */}
       {showScrollButton && (
         <IconButton
           icon={<FaArrowUp />}
