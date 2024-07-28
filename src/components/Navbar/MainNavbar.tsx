@@ -2,68 +2,69 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 import categories from '../../config/fakedata.js';
 import DropdownContent from '../ui/DropdownContent';
-import styles from './MainNavbar.module.css';
 
 const MainNavbar: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const overlay = document.getElementById('overlay');
-    if (activeCategory !== null) {
-      overlay?.classList.add(styles.showOverlay);
-    } else {
-      overlay?.classList.remove(styles.showOverlay);
-    }
-  }, [activeCategory]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleMouseEnter = (index: number) => {
     if (dropdownTimeout.current) {
       clearTimeout(dropdownTimeout.current);
     }
     setActiveCategory(index);
-    setIsDropdownVisible(true);
+    onOpen();
   };
 
   const handleMouseLeave = () => {
     dropdownTimeout.current = setTimeout(() => {
       setActiveCategory(null);
-      setIsDropdownVisible(false);
-    }, 2); // Adjust delay as needed
+      onClose();
+    }, 200); // Adjust delay as needed
   };
+
+  useEffect(() => {
+    const overlay = document.getElementById('overlay');
+    if (activeCategory !== null) {
+      overlay?.classList.add('showOverlay');
+    } else {
+      overlay?.classList.remove('showOverlay');
+    }
+  }, [activeCategory]);
 
   return (
     <>
-      <div id="overlay" className={styles.overlay}></div>
-      {/* <BlurredOverlay /> */}
-      <div className={`bg-white shadow-md relative ${styles.navbar} z-50`}>
-        <div className="hidden md:flex box-border justify-around px-4 items-center space-x-4">
+      <Box id="overlay" className="overlay"></Box>
+      <Box bg="white" shadow="md" position="relative" zIndex="50" width="100%">
+        <Flex display={{ base: 'none', md: 'flex' }} justify="space-around" px="4" align="center">
           {categories.map((category, index) => (
-            <div
+            <Box
               key={category.id}
-              className={`relative ${styles.navbarItem}`}
+              position="relative"
+              p="3px"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             >
-              <button className="relative py-2 box-content hover:text-teal-900 transition-colors duration-300">
+              <Button variant="link" py="2" _hover={{ textDecoration: 'none', color: 'teal.900' }} transition="color 0.3s">
                 {category.name}
                 <motion.div
-                  className={`absolute bottom-0 left-0 h-1 bg-black ${styles.underlineAnimation}`}
+                  style={{ position: 'absolute', bottom: 0, left: 0, height: '3px', backgroundColor: 'var(--color-dark-teal)' }}
                   initial={{ width: 0 }}
                   animate={{ width: activeCategory === index ? '100%' : '0' }}
-                  transition={{ duration: 0.2, easings: 'easeInOut', }}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
                 />
-              </button>
-            </div>
+              </Button>
+            </Box>
           ))}
-        </div>
+        </Flex>
         <AnimatePresence>
-          {activeCategory !== null && isDropdownVisible && (
+          {activeCategory !== null && isOpen && (
             <motion.div
-              className={`absolute left-0 top-full bg-white shadow-lg w-full p-4 z-50 ${styles.dropdown}`}
+              key={activeCategory}
+              style={{ position: 'absolute', left: 0, top: '100%', backgroundColor: 'white', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', width: '100vw', padding: '16px', height: '350px', zIndex: 50 }}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -75,11 +76,13 @@ const MainNavbar: React.FC = () => {
               }}
               onMouseLeave={handleMouseLeave}
             >
-              <DropdownContent category={categories[activeCategory]} />
+              <Box display="flex" width="100%" padding="16px">
+                  <DropdownContent category={categories[activeCategory]} />
+              </Box>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </Box>
     </>
   );
 };
