@@ -7,42 +7,42 @@ const categories =  [
     "subcategories": [
       {
         "id": 101,
-        "name": "Standard Business Cards",
+        "name": "Standard",
         "image": "https://dummyimage.com/200x300&text=dummyimage.com+rocks!",
         "description": "Standard business cards with various finishes.",
         "products": [
           {
             "id": 1001,
-            "name": "Matte Business Cards",
+            "name": "Matte",
             "image": "https://via.placeholder.com/150",
             "description": "Matte finish business cards.",
             "subproducts": [
               {
                 "id": 10001,
-                "name": "14pt Matte Finish",
+                "name": "14pt",
                 "description": "Durable 14pt matte finish."
               },
               {
                 "id": 10002,
-                "name": "16pt Matte Finish",
+                "name": "16pt",
                 "description": "Premium 16pt matte finish."
               }
             ]
           },
           {
             "id": 1002,
-            "name": "Glossy Business Cards",
+            "name": "Glossy",
             "image": "https://via.placeholder.com/150",
             "description": "Glossy finish business cards.",
             "subproducts": [
               {
                 "id": 10003,
-                "name": "14pt Glossy Finish",
+                "name": "14pt ",
                 "description": "Durable 14pt glossy finish."
               },
               {
                 "id": 10004,
-                "name": "16pt Glossy Finish",
+                "name": "16pt ",
                 "description": "Premium 16pt glossy finish."
               }
             ]
@@ -51,13 +51,13 @@ const categories =  [
       },
       {
         "id": 102,
-        "name": "Premium Business Cards",
+        "name": "Premium",
         "image": "https://via.placeholder.com/150",
         "description": "Premium quality business cards with unique finishes.",
         "products": [
           {
             "id": 1003,
-            "name": "Silk Business Cards",
+            "name": "Silk",
             "image": "https://via.placeholder.com/150",
             "description": "Silk finish business cards.",
             "subproducts": [
@@ -295,18 +295,18 @@ const categories =  [
         "products": [
           {
             "id": 8001,
-            "name": "Discounted Business Cards",
+            "name": "Discounted",
             "image": "https://via.placeholder.com/150",
             "description": "Special discounts on business cards.",
             "subproducts": [
               {
                 "id": 80001,
-                "name": "14pt Matte Business Cards",
+                "name": "14pt Matte",
                 "description": "Discounted 14pt matte business cards."
               },
               {
                 "id": 80002,
-                "name": "16pt Glossy Business Cards",
+                "name": "16pt Glossy",
                 "description": "Discounted 16pt glossy business cards."
               }
             ]

@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
-import categories from '../../config/fakedata.js';
-import DropdownContent from '../ui/DropdownContent';
+import categories from '@/config/fakedata.js';
+import DropdownContent from '@/components/Navbar/DropdownContent';
 
 const MainNavbar: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
@@ -23,7 +23,7 @@ const MainNavbar: React.FC = () => {
     dropdownTimeout.current = setTimeout(() => {
       setActiveCategory(null);
       onClose();
-    }, 200); // Adjust delay as needed
+    }, 50); // Adjust delay as needed
   };
 
   useEffect(() => {
@@ -37,21 +37,23 @@ const MainNavbar: React.FC = () => {
 
   return (
     <>
-      <Box id="overlay" className="overlay"></Box>
+      <Box id="overlay" className="overlay backdrop-blur"></Box>
       <Box bg="white" shadow="md" position="relative" zIndex="50" width="100%">
-        <Flex display={{ base: 'none', md: 'flex' }} justify="space-around" px="4" align="center">
+        <Flex display={{ base: 'none', md: 'flex' }} justify="space-evenly" padding={4} align="center" className='flex-wrap' >
           {categories.map((category, index) => (
             <Box
               key={category.id}
               position="relative"
-              p="3px"
+              padding="3px"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
+              maxWidth={'230px'}
+              className="whitespace-normal"
             >
-              <Button variant="link" py="2" _hover={{ textDecoration: 'none', color: 'teal.900' }} transition="color 0.3s">
+              <Button className='whitespace' variant="link" py="2" _hover={{ textDecoration: 'none', color: 'teal.900' }} transition="color 0.3s" fontWeight='normal'>
                 {category.name}
                 <motion.div
-                  style={{ position: 'absolute', bottom: 0, left: 0, height: '3px', backgroundColor: 'var(--color-dark-teal)' }}
+                  className="absolute bottom-0 left-0 h-[2px] bg-teal-900"
                   initial={{ width: 0 }}
                   animate={{ width: activeCategory === index ? '100%' : '0' }}
                   transition={{ duration: 0.2, ease: 'easeInOut' }}
@@ -64,7 +66,7 @@ const MainNavbar: React.FC = () => {
           {activeCategory !== null && isOpen && (
             <motion.div
               key={activeCategory}
-              style={{ position: 'absolute', left: 0, top: '100%', backgroundColor: 'white', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', width: '100vw', padding: '16px', height: '350px', zIndex: 50 }}
+              className="absolute left-0 top-full bg-white shadow-lg w-full p-4 h-[380px] z-40 overflow-hidden"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -76,8 +78,8 @@ const MainNavbar: React.FC = () => {
               }}
               onMouseLeave={handleMouseLeave}
             >
-              <Box display="flex" width="100%" padding="16px">
-                  <DropdownContent category={categories[activeCategory]} />
+              <Box className="flex w-full p-4">
+                <DropdownContent category={categories[activeCategory]} />
               </Box>
             </motion.div>
           )}
