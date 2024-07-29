@@ -1,180 +1,106 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiSearch, FiUser, FiShoppingCart, FiHelpCircle, FiMenu } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
-import LanguageSwitcher from './LanguageSwitcher';
-import SideMenu from './SideMenu';
-import SearchBar from '../ui/SearchBar';
+import { Box, HStack, IconButton, Button, Image, useDisclosure } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { fetchCartItemsStart } from '@/redux/slices/cartSlice';
 import { signOutStart, fetchSessionStart } from '@/redux/slices/authSlice';
+import LanguageSwitcher from './LanguageSwitcher';
+import SideMenu from './SideMenu';
+import SearchBar from '../ui/SearchBar';
 
 const TopNavbar: React.FC = () => {
-  // Local state for menu and dropdowns
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
-
-  // Hooks for theme and router
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { colors } = useTheme();
-  const router = useRouter();
   const dispatch = useDispatch();
-
-  // Redux state for session and cart items
+  const router = useRouter();
   const session = useSelector((state: RootState) => state.auth.session);
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  
-  // Fetch session and cart items when component mounts
+
   useEffect(() => {
-    if(!session)
-    dispatch(fetchSessionStart());
-  }, [dispatch]);
-  
+    if (!session) dispatch(fetchSessionStart());
+  }, [dispatch, session]);
+
   useEffect(() => {
     if (session) {
       dispatch(fetchCartItemsStart(session.id));
     }
   }, [dispatch, session]);
 
-  // Handle search logic
   const handleSearch = (query: string) => {
-    // TODO: Implement search logic
     console.log(query);
   };
 
-  // Handle user sign-out
   const handleSignOut = async () => {
     dispatch(signOutStart());
-    // router.push('/');
   };
 
-  // Variants for motion animations
-  const navItemVariants = {
-    hover: {
-      scale: 1,
-      color: colors.darkTeal,
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 10,
-        duration: 0.3,
-        delay: 0.1,
-        ease: 'easeInOut',
-      },
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
+
+  const linkButtonStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    background: 'transparent',
+    color: '#424242',
+    fontWeight: 'normal',
+    padding: 0,
+    height: 'auto',
+    _hover: {
+      color: '#0B6162',
+      textDecoration: 'none',
     },
+    _focus: {
+      boxShadow: 'none',
+    },
+    _active: {
+      background: 'transparent',
+      transform: 'scale(0.98)',
+    },
+    transition: 'color 0.7s, transform 0.3s',
+    gap: '0.5rem', // Adjusts spacing between icon and text
   };
 
   return (
     <>
-      {/* Large Screen View */}
-      <div className="hidden md:flex justify-between items-center bg-white pr-4 pl-2 pt-2 sticky top-0 z-50">
-        <Link href="/" legacyBehavior>
-          <a className="text-2xl" style={{ fontFamily: 'poppins, sans-serif', marginLeft: '24px' }}>Lines and Colors</a>
-        </Link>
-        <div className="flex items-center space-x-6">
-          <div className="flex justify-center p-4">
+      <Box className="hidden md:flex justify-between items-center bg-white pr-4 pl-8 pt-2 sticky top-0 z-50">
+        <Button onClick={() => handleNavigate('/')} {...linkButtonStyle}>
+          <Image src="/logo.svg" alt="Lines and Colors" height="20px" />
+        </Button>
+        <HStack spacing={6}>
+          <Box className="flex justify-center p-4">
             <SearchBar onSearch={handleSearch} />
-          </div>
+          </Box>
           <LanguageSwitcher />
-          <motion.div
-            whileHover="hover"
-            variants={navItemVariants}
-            className="relative flex items-center space-x-2 cursor-pointer"
-            onMouseEnter={() => setDropdownOpen('help')}
-          >
+          <Button onClick={() => handleNavigate('/help')} {...linkButtonStyle}>
             <FiHelpCircle />
-            <Link href="/help" legacyBehavior>
-              <a>Help</a>
-            </Link>
-          </motion.div>
-          <motion.div
-            whileHover="hover"
-            variants={navItemVariants}
-            className="relative flex items-center space-x-2 cursor-pointer"
-            onMouseEnter={() => setDropdownOpen('cart')}
-          >
+            <span>Help</span>
+          </Button>
+          <Button onClick={() => handleNavigate('/cart')} {...linkButtonStyle}>
             <FiShoppingCart />
-            <a>Cart</a>
-          </motion.div>
-          <motion.div
-            whileHover="hover"
-            variants={navItemVariants}
-            className="relative flex items-center space-x-2 cursor-pointer"
-            onMouseEnter={() => setDropdownOpen('account')}
-          >
+            <span>Cart</span>
+          </Button>
+          <Button onClick={() => handleNavigate('/account')} {...linkButtonStyle}>
             <FiUser />
-            <a>Account</a>
-          </motion.div>
-        </div>
-      </div>
+            <span>Account</span>
+          </Button>
+        </HStack>
+      </Box>
 
-      {/* Mobile View */}
-      <div className="flex md:hidden justify-between items-center bg-white p-4 shadow">
-        <Link href="/" legacyBehavior>
-          <a className="text-3xl" style={{ fontFamily: 'Futura' }}>Lines and Colors</a>
-        </Link>
-        <button onClick={() => setIsMenuOpen(true)}>
-          <FiMenu size={24} />
-        </button>
-      </div>
+      <Box className="flex md:hidden justify-between items-center bg-white p-4 shadow">
+        <Button onClick={() => handleNavigate('/')} {...linkButtonStyle}>
+          <Image src="/logo.svg" alt="Lines and Colors" height="40px" />
+        </Button>
+        <IconButton icon={<FiMenu size={24} />} aria-label="Open Menu" onClick={onOpen} />
+      </Box>
 
-      {isMenuOpen && <SideMenu onClose={() => setIsMenuOpen(false)} />}
-
-      <AnimatePresence>
-        {dropdownOpen && (
-          <motion.div
-            className="fixed top-14 right-0 mt-2 bg-white shadow-md p-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            style={{ height: '300px', width: '250px', right: '10px',zIndex:'52' }}
-            onMouseEnter={() => setDropdownOpen(dropdownOpen)}
-            onMouseLeave={() => setDropdownOpen(null)}
-          >
-            {dropdownOpen === 'help' && (
-              <div>
-                <p>Help content here</p>
-              </div>
-            )}
-            {dropdownOpen === 'cart' && (
-              <div>
-                {cartItems.length === 0 ? (
-                  <p>Your cart is empty</p>
-                ) : (
-                  <ul>
-                    {cartItems.map((item) => (
-                      <li key={item.id}>{item.product_id}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-            {dropdownOpen === 'account' && (
-              <div>
-                {session ? (
-                  <>
-                    <button onClick={handleSignOut} className="block w-full text-left">Logout</button>
-                    <Link href="/account" legacyBehavior>
-                      <a className="block mt-2">Manage Account</a>
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/register" legacyBehavior>
-                      <a className="block w-full text-left">Login</a>
-                    </Link>
-                    <p className="mt-2">Login and register to manage and view account</p>
-                  </>
-                )}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && <SideMenu onClose={onClose} />}
     </>
   );
 };
