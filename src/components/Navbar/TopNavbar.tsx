@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { fetchCartItemsStart } from '@/redux/slices/cartSlice';
 import { signOutStart, fetchSessionStart } from '@/redux/slices/authSlice';
-import LanguageSwitcher from './LanguageSwitcher';
+import RegionSwitcher from './RegionSwitcher';
 import SideMenu from './SideMenu';
 import SearchBar from '../ui/SearchBar';
 
@@ -77,7 +77,7 @@ const TopNavbar: React.FC = () => {
           <Box className="flex justify-center p-4">
             <SearchBar onSearch={handleSearch} />
           </Box>
-          <LanguageSwitcher />
+          <RegionSwitcher />
           <Button onClick={() => handleNavigate('/help')} {...linkButtonStyle}>
             <FiHelpCircle />
             <span>Help</span>
