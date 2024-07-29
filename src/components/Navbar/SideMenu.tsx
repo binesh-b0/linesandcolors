@@ -3,7 +3,7 @@
 import React from 'react';
 import { FiSearch, FiX } from 'react-icons/fi';
 import Link from 'next/link';
-import LanguageSwitcher from './LanguageSwitcher';
+import RegionSwitcher from './RegionSwitcher';
 import categories from '../../config/fakedata';
 
 interface SideMenuProps {
@@ -33,7 +33,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
             </div>
             <div className="mb-4 flex flex-row">
                 <div className='flex items-center justify-center mr-2 ml-2'>
-                    <LanguageSwitcher />
+                    <RegionSwitcher />
                 </div>
                 <div className='flex items-center justify-center mr-2'>
                     <Link href="/help" legacyBehavior>
