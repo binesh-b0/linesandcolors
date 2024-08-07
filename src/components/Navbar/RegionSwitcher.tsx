@@ -89,7 +89,7 @@ const RegionSwitcher: React.FC = () => {
           initial={{ scale: 0.9, opacity: 0 }} // Initial state for animation
           animate={{ scale: 1, opacity: 1 }} // Animate to this state
           exit={{ scale: 0.9, opacity: 0 }} // Exit animation
-          transition={{ duration: 0.5 }} // Spring animation settings
+          transition={{ duration: '0.5' }} // Spring animation settings
           style={{ backgroundColor: 'white', color: 'black', padding: '16px' }}
         >
           {/* Close button for the modal */}
