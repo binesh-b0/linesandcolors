@@ -224,21 +224,56 @@ export type Database = {
           deleted_at: string | null
           description: string | null
           id: string
+          image_id: string | null
           name: string
+          title: string
         }
         Insert: {
           created_at?: string | null
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name: string
+          title: string
         }
         Update: {
           created_at?: string | null
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      images: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          url?: string
         }
         Relationships: []
       }
@@ -248,6 +283,7 @@ export type Database = {
           id: string
           message: string
           read: boolean | null
+          type: string | null
           user_id: string | null
         }
         Insert: {
@@ -255,6 +291,7 @@ export type Database = {
           id?: string
           message: string
           read?: boolean | null
+          type?: string | null
           user_id?: string | null
         }
         Update: {
@@ -262,6 +299,7 @@ export type Database = {
           id?: string
           message?: string
           read?: boolean | null
+          type?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -405,44 +443,6 @@ export type Database = {
           },
         ]
       }
-      preferences: {
-        Row: {
-          created_at: string | null
-          dark_mode: boolean | null
-          email_updates: boolean | null
-          id: string
-          sms_notifications: boolean | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          dark_mode?: boolean | null
-          email_updates?: boolean | null
-          id?: string
-          sms_notifications?: boolean | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          dark_mode?: boolean | null
-          email_updates?: boolean | null
-          id?: string
-          sms_notifications?: boolean | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "preferences_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       product_attributes: {
         Row: {
           created_at: string | null
@@ -469,42 +469,49 @@ export type Database = {
       }
       products: {
         Row: {
-          category_id: string | null
-          cover: string | null
           created_at: string | null
           deleted_at: string | null
           description: string | null
           id: string
+          image_id: string | null
           name: string
+          subcategory_id: string | null
           summary: string | null
           updated_at: string | null
         }
         Insert: {
-          category_id?: string | null
-          cover?: string | null
           created_at?: string | null
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name: string
+          subcategory_id?: string | null
           summary?: string | null
           updated_at?: string | null
         }
         Update: {
-          category_id?: string | null
-          cover?: string | null
           created_at?: string | null
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name?: string
+          subcategory_id?: string | null
           summary?: string | null
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "fk_products_category_id"
-            columns: ["category_id"]
+            foreignKeyName: "products_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_subcategory_id_fkey"
+            columns: ["subcategory_id"]
             isOneToOne: false
             referencedRelation: "sub_categories"
             referencedColumns: ["id"]
@@ -614,12 +621,51 @@ export type Database = {
           },
         ]
       }
+      settings: {
+        Row: {
+          created_at: string | null
+          dark_mode: boolean | null
+          email_updates: boolean | null
+          id: string
+          sms_notifications: boolean | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          dark_mode?: boolean | null
+          email_updates?: boolean | null
+          id?: string
+          sms_notifications?: boolean | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          dark_mode?: boolean | null
+          email_updates?: boolean | null
+          id?: string
+          sms_notifications?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "preferences_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sub_categories: {
         Row: {
           created_at: string | null
           deleted_at: string | null
           description: string | null
           id: string
+          image_id: string | null
           name: string
           parent_id: string | null
         }
@@ -628,6 +674,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name: string
           parent_id?: string | null
         }
@@ -636,6 +683,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           id?: string
+          image_id?: string | null
           name?: string
           parent_id?: string | null
         }
@@ -645,6 +693,13 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sub_categories_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
             referencedColumns: ["id"]
           },
         ]
@@ -693,6 +748,57 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      variants: {
+        Row: {
+          cost: number | null
+          created_at: string
+          description: string | null
+          finish: string | null
+          id: string
+          image_id: string | null
+          name: string
+          product_id: string | null
+          thickness: string | null
+        }
+        Insert: {
+          cost?: number | null
+          created_at?: string
+          description?: string | null
+          finish?: string | null
+          id?: string
+          image_id?: string | null
+          name: string
+          product_id?: string | null
+          thickness?: string | null
+        }
+        Update: {
+          cost?: number | null
+          created_at?: string
+          description?: string | null
+          finish?: string | null
+          id?: string
+          image_id?: string | null
+          name?: string
+          product_id?: string | null
+          thickness?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variants_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vendors: {
         Row: {
