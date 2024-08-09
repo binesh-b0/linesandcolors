@@ -1,16 +1,16 @@
 "use client";
 import { VStack, Checkbox, Button } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { getPreferences, updatePreferences } from '@/services/user'; // Implement these functions
+import { fetchUserSettings } from '@/services/settingsService'; // Implement these functions
 
 const Preferences = () => {
-  const [preferences, setPreferences] = useState(null);
+  const [preferences, setPreferences] = useState({darkMode:false,emailUpdates:false});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPreferences = async () => {
-      const prefs = await getPreferences();
-      setPreferences(prefs);
+      // const prefs = await fetchUserSettings();
+      // setPreferences(prefs);
       setIsLoading(false);
     };
     fetchPreferences();

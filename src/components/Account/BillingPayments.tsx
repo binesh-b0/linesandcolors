@@ -19,14 +19,14 @@ import {
 import React, { useState, useEffect } from 'react';
 import {
   fetchBillingDetails,
-  updateBillingDetails,
-  getUserAddresses,
+  saveBillingDetails,
+  fetchUserSettings,
   addAddress,
 } from '@/services/settingsService'; // Implement these functions
 import { Session } from '@/models/Session';
 import { User } from '@/models/User';
-import { BillingDetails, Address } from '@/models/Settings';
-
+import { BillingDetails } from '@/models/Settings';
+import {Address} from '@/models/Address'
 interface BillingPaymentsProps {
   session: Session;
   user: Partial<User>;
