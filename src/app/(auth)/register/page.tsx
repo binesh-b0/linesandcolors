@@ -8,7 +8,6 @@ import { RootState } from '@/redux/store';
 import {
   signInStart,
   signUpStart,
-  setError,
 } from '@/redux/slices/authSlice';
 
 const Register = () => {
@@ -19,6 +18,7 @@ const Register = () => {
   const { session, error, loading } = useSelector((state: RootState) => state.auth);
 
   // Local state
+  const [errorLocal, setError] = useState(error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   const handleFocus = () => {
-    if (error) {
+    if (errorLocal) {
       dispatch(setError(null));
     }
   };
@@ -80,7 +80,7 @@ const Register = () => {
       showPassword={showPassword}
       setShowPassword={setShowPassword}
       loading={loading}
-      error={error}
+      error={errorLocal}
     />
   );
 };
