@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Box, VStack, Heading, Text, Input, Button, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
-import { resetPassword } from '@/services/auth'; // Implement this function
+import { resetPassword } from '@/services/authService';
 
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState('');

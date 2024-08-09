@@ -93,7 +93,8 @@ export const sendPasswordResetEmail = async (email: string) => {
  * @param token - The password reset token.
  * @param newPassword - The new password.
  */
-export const resetPassword = async (token: string, newPassword: string) => {
+export const resetPassword = async (token: string | null, newPassword: string) => {
+  if (token ==  null) return
   const { error } = await supabase.auth.updateUser(token, { password: newPassword });
   if (error) throw new Error(error.message);
 };
